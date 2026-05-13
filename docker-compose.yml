@@ -2,6 +2,7 @@ services:
   server:
     image: opensign/opensignserver:main
     container_name: OpenSignServer-container
+    restart: always
     volumes:
       - opensign-files:/usr/src/app/files
     ports:
@@ -17,6 +18,7 @@ services:
       - app-network
   mongo:
     image: mongo:latest
+    restart: always
     container_name: mongo-container
     volumes:
       - data-volume:/data/db
@@ -26,6 +28,7 @@ services:
       - app-network
   client:
     image: opensign/opensign:main
+    restart: always
     container_name: OpenSign-container
     depends_on:
       - server
