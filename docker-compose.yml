@@ -1,9 +1,6 @@
 services:
   server:
-    build:
-      context: .
-      dockerfile: apps/OpenSignServer/Dockerhubfile
-    image: opensign-server:local
+    image: opensign/opensignserver:main
     container_name: OpenSignServer-container
     restart: always
     volumes:
@@ -32,17 +29,14 @@ services:
       - app-network
 
   client:
-    build:
-      context: .
-      dockerfile: apps/OpenSign/Dockerhubfile
-    image: opensign-client:local
+    image: opensign/opensign:main
     container_name: OpenSign-container
     restart: always
     depends_on:
       - server
     env_file: .env.prod
     ports:
-      - "3002:3000" # Cambiado a 3002 para evitar conflictos con Docuseal
+      - "3002:3000"
     networks:
       - app-network
 
