@@ -7,9 +7,8 @@ echo "Generating runtime env file at $ENV_FILE..."
 
 echo "window.RUNTIME_ENV = {" > $ENV_FILE
 
-# List of keys to include
+# List of keys to includef
 #RUNTIME_KEYS="REACT_APP_SERVERURL"
-
 RUNTIME_KEYS="REACT_APP_SERVERURL REACT_APP_APPID PUBLIC_URL"
 
 for key in $RUNTIME_KEYS; do
