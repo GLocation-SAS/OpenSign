@@ -1,7 +1,11 @@
 services:
   server:
-    image: opensign/opensignserver:main
+    build:
+      context: .
+      dockerfile: apps/OpenSignServer/Dockerhubfile
+    image: opensign-server:local
     container_name: OpenSignServer-container
+    restart: always
     volumes:
       - opensign-files:/usr/src/app/files
     ports:
@@ -11,32 +15,41 @@ services:
     env_file: .env.prod
     environment:
       - NODE_ENV=production
-      - SERVER_URL=${HOST_URL:-https://localhost:3001}/api/app
-      - PUBLIC_URL=${HOST_URL:-https://localhost:3001}
+      - SERVER_URL=${HOST_URL:-http://localhost:3001}/api/app
+      - PUBLIC_URL=${HOST_URL:-http://localhost:3001}
     networks:
       - app-network
+
   mongo:
     image: mongo:latest
     container_name: mongo-container
+    restart: always
     volumes:
       - data-volume:/data/db
     ports:
       - "27018:27017"
     networks:
       - app-network
+
   client:
-    image: opensign/opensign:main
+    build:
+      context: .
+      dockerfile: apps/OpenSign/Dockerhubfile
+    image: opensign-client:local
     container_name: OpenSign-container
+    restart: always
     depends_on:
       - server
-    env_file: .env.prod  
+    env_file: .env.prod
     ports:
-      - "3000:3000"
+      - "3002:3000" # Cambiado a 3002 para evitar conflictos con Docuseal
     networks:
       - app-network
+
   caddy:
     image: caddy:latest
     container_name: caddy-container
+    restart: always
     ports:
       - "3001:3001"
       - "80:80"
@@ -50,6 +63,7 @@ services:
       - app-network
     environment:
       - HOST_URL=${HOST_URL:-localhost:3001}
+
 networks:
   app-network:
     driver: bridge
