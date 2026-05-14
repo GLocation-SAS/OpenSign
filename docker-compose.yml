@@ -1,6 +1,8 @@
 services:
   server:
-    image: opensign/opensignserver:main
+    build:
+      context: .
+      dockerfile: apps/OpenSignServer/Dockerhubfile
     container_name: OpenSignServer-container
     restart: always
     volumes:
@@ -12,10 +14,11 @@ services:
     env_file: .env.prod
     environment:
       - NODE_ENV=production
-      - SERVER_URL=${HOST_URL:-https://localhost:3001}/api/app
-      - PUBLIC_URL=${HOST_URL:-https://localhost:3001}
+      - SERVER_URL=${HOST_URL:-http://localhost:3001}/api/app
+      - PUBLIC_URL=${HOST_URL:-http://localhost:3001}
     networks:
       - app-network
+
   mongo:
     image: mongo:latest
     restart: always
@@ -26,10 +29,13 @@ services:
       - "27020:27017"
     networks:
       - app-network
+
   client:
-    image: opensign/opensign:main
-    restart: always
+    build:
+      context: .
+      dockerfile: apps/OpenSign/Dockerhubfile
     container_name: OpenSign-container
+    restart: always
     depends_on:
       - server
     env_file: .env.prod
@@ -37,14 +43,15 @@ services:
       - "3000:3000"
     networks:
       - app-network
+
   caddy:
     image: caddy:latest
     container_name: caddy-container
+    restart: always
     ports:
       - "3001:3001"
       - "80:80"
       - "443:443"
-      - "443:443/udp"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
@@ -53,6 +60,7 @@ services:
       - app-network
     environment:
       - HOST_URL=${HOST_URL:-localhost:3001}
+
 networks:
   app-network:
     driver: bridge
