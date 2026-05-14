@@ -38,7 +38,7 @@ export default async function saveFile(request) {
         // return { url: fileRes.url };
         try {
           const fileRes = await parseUploadFile(fileName, file, mimeType);
-          fileUrl = getSecureUrl(fileRes?.url)?.url;
+          const fileUrl = getSecureUrl(fileRes?.url)?.url;
           return { url: fileUrl };
         } catch (err) {
           throw new Parse.Error(400, err?.message);
