@@ -121,8 +121,9 @@ async function updateDoc(docId, url, userId, ipAddress, data, className, sign, d
 async function sendNotifyMail(doc, signUser, mailProvider, publicUrl) {
   try {
     const TenantAppName = appName;
-    const logo =
-      "<img src='https://qikinnovation.ams3.digitaloceanspaces.com/logo.png' height='50' style='padding:20px'/>";
+    //const logo ="<img src='https://qikinnovation.ams3.digitaloceanspaces.com/logo.png' height='50' style='padding:20px'/>";
+    const logo = `<img src='${req.headers.public_url || 'http://localhost:3000'}/logo.png' height='50' style='padding:20px'/>`
+
 
     const auditTrailCount = doc?.AuditTrail?.filter(x => x.Activity === 'Signed')?.length || 0;
     const removePrefill =

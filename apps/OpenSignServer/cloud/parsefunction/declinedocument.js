@@ -12,8 +12,10 @@ const headers = {
 async function sendDeclineMail(doc, publicUrl, userId, reason) {
   try {
     const TenantAppName = appName;
+    const publicUrl = request.headers.public_url || 'http://localhost:3000';
     const logo =
-      "<img src='https://qikinnovation.ams3.digitaloceanspaces.com/logo.png' height='50' style='padding:20px'/>";
+      `<img src='${publicUrl}/logo.png' height='50' style='padding:20px'/>`
+
 
     const removePrefill =
       doc?.Placeholders?.length > 0 && doc?.Placeholders?.filter(x => x?.Role !== 'prefill');
