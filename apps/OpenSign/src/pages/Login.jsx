@@ -24,7 +24,7 @@ import SelectLanguage from "../components/pdf/SelectLanguage";
 
 function Login() {
   const appName =
-    "OpenSign™";
+    "Glocation";
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -52,7 +52,7 @@ function Login() {
   }, []);
 
   const handleUserExist = async () => {
-      checkUserExt();
+    checkUserExt();
   };
 
 
@@ -195,7 +195,7 @@ function Login() {
               localStorage.setItem("PageLanding", menu.pageId);
               localStorage.setItem("defaultmenuid", menu.menuId);
               localStorage.setItem("pageType", menu.pageType);
-                navigate(redirectUrl);
+              navigate(redirectUrl);
             } else {
               showToast("danger", t("role-not-found"));
               logOutUser();
@@ -255,7 +255,7 @@ function Login() {
             localStorage.setItem("PageLanding", menu.pageId);
             localStorage.setItem("defaultmenuid", menu.menuId);
             localStorage.setItem("pageType", menu.pageType);
-              navigate(redirectUrl);
+            navigate(redirectUrl);
           } else {
             setState({ ...state, loading: false });
             logOutUser();
@@ -387,8 +387,8 @@ function Login() {
             localStorage.setItem("PageLanding", menu.pageId);
             localStorage.setItem("defaultmenuid", menu.menuId);
             localStorage.setItem("pageType", menu.pageType);
-              setState({ ...state, loading: false });
-              navigate(redirectUrl);
+            setState({ ...state, loading: false });
+            navigate(redirectUrl);
           } else {
             setState({ ...state, loading: false });
             setIsModal(true);
@@ -398,8 +398,8 @@ function Login() {
           logOutUser();
         }
       } else {
-          showToast("danger", t("user-not-found"));
-          logOutUser();
+        showToast("danger", t("user-not-found"));
+        logOutUser();
       }
     } catch (error) {
       console.error("Error during login flow", error);
@@ -465,47 +465,47 @@ function Login() {
                           onInput={(e) => e.target.setCustomValidity("")}
                         />
                         <hr className="my-1 border-none" />
-                            <label className="block text-xs" htmlFor="password">
-                              {t("password")}
-                            </label>
-                            <div className="relative">
-                              <input
-                                id="password"
-                                type={
-                                  state.passwordVisible ? "text" : "password"
-                                }
-                                className="op-input op-input-bordered op-input-sm focus:outline-none hover:border-base-content w-full text-xs"
-                                name="password"
-                                value={state.password}
-                                autoComplete="current-password"
-                                onChange={handleChange}
-                                onInvalid={(e) =>
-                                  e.target.setCustomValidity(
-                                    t("input-required")
-                                  )
-                                }
-                                onInput={(e) => e.target.setCustomValidity("")}
-                                required
-                              />
-                              <span
-                                className="absolute cursor-pointer top-[50%] right-[10px] -translate-y-[50%] text-base-content"
-                                onClick={togglePasswordVisibility}
-                              >
-                                {state.passwordVisible ? (
-                                  <i className="fa-light fa-eye-slash text-xs pb-1" /> // Close eye icon
-                                ) : (
-                                  <i className="fa-light fa-eye text-xs pb-1 " /> // Open eye icon
-                                )}
-                              </span>
-                            </div>
-                          <div className="relative mt-1">
-                            <NavLink
-                              to="/forgetpassword"
-                              className="text-[13px] op-link op-link-primary underline-offset-1 focus:outline-none ml-1"
-                            >
-                              {t("forgot-password")}?
-                            </NavLink>
-                          </div>
+                        <label className="block text-xs" htmlFor="password">
+                          {t("password")}
+                        </label>
+                        <div className="relative">
+                          <input
+                            id="password"
+                            type={
+                              state.passwordVisible ? "text" : "password"
+                            }
+                            className="op-input op-input-bordered op-input-sm focus:outline-none hover:border-base-content w-full text-xs"
+                            name="password"
+                            value={state.password}
+                            autoComplete="current-password"
+                            onChange={handleChange}
+                            onInvalid={(e) =>
+                              e.target.setCustomValidity(
+                                t("input-required")
+                              )
+                            }
+                            onInput={(e) => e.target.setCustomValidity("")}
+                            required
+                          />
+                          <span
+                            className="absolute cursor-pointer top-[50%] right-[10px] -translate-y-[50%] text-base-content"
+                            onClick={togglePasswordVisibility}
+                          >
+                            {state.passwordVisible ? (
+                              <i className="fa-light fa-eye-slash text-xs pb-1" /> // Close eye icon
+                            ) : (
+                              <i className="fa-light fa-eye text-xs pb-1 " /> // Open eye icon
+                            )}
+                          </span>
+                        </div>
+                        <div className="relative mt-1">
+                          <NavLink
+                            to="/forgetpassword"
+                            className="text-[13px] op-link op-link-primary underline-offset-1 focus:outline-none ml-1"
+                          >
+                            {t("forgot-password")}?
+                          </NavLink>
+                        </div>
                       </div>
                     </fieldset>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-center text-xs font-bold mt-2">

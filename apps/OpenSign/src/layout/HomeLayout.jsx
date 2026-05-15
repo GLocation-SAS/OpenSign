@@ -19,7 +19,7 @@ import SessionExpiredModal from "../primitives/SessionExpiredModal";
 
 const HomeLayout = () => {
   const appName =
-    "OpenSign™";
+    "Glocation";
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const tourArr = useSelector((state) => state.TourSteps);
@@ -53,8 +53,8 @@ const HomeLayout = () => {
             });
             if (user) {
               localStorage.setItem("profileImg", user.get("ProfilePic") || "");
-                dispatch(sessionStatus(true));
-                setIsLoader(false);
+              dispatch(sessionStatus(true));
+              setIsLoader(false);
             } else {
               dispatch(sessionStatus(true));
             }

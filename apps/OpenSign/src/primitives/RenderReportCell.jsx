@@ -37,7 +37,7 @@ export const RenderReportCell = ({
 }) => {
   const { t } = useTranslation();
   const appName =
-    "OpenSign™";
+    "Glocation";
   const drivename = appName === "OpenSign™" ? "OpenSign™" : "";
   switch (col) {
     case "Sr.No":

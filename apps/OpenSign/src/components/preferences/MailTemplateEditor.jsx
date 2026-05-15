@@ -14,7 +14,7 @@ const MailTemplateEditor = ({
   tenantId,
 }) => {
   const appName =
-    "OpenSign™";
+    "Glocation";
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [requestBody, setRequestBody] = useState({ basic: "", advanced: "" });
@@ -43,7 +43,7 @@ const MailTemplateEditor = ({
   const defaultCompletionSubject = `Document {{document_title}} has been signed by all parties`;
   const defaultCompletionBody = `<p>Hi {{sender_name}},</p><br><p>All parties have successfully signed the document {{document_title}}. Kindly download the document from the attachment.</p><br><p>Thanks</p><p> Team ${appName}</p><br>`;
   const cloudfunction =
-        "updatetenant";
+    "updatetenant";
 
   useEffect(() => {
     fetchSubscription();
@@ -58,7 +58,7 @@ const MailTemplateEditor = ({
       : setIsDefaultMail((p) => ({ ...p, completionMail: !p?.completionMail }));
   };
   const fetchSubscription = async () => {
-      await tenantEmailTemplate(info);
+    await tenantEmailTemplate(info);
   };
 
   const tenantEmailTemplate = async (tenantRes) => {
@@ -112,7 +112,7 @@ const MailTemplateEditor = ({
 
   const updateValuesInRedux = (subject, body, response) => {
     const action =
-          setTenantInfo;
+      setTenantInfo;
     const updatedInfo = { ...info };
     updatedInfo[subject] = response?.[subject] ?? "";
     updatedInfo[body] = response?.[body] ?? "";
@@ -186,9 +186,9 @@ const MailTemplateEditor = ({
           localStorage.getItem("Extand_Class") &&
           JSON.parse(localStorage.getItem("Extand_Class"))?.[0];
         if (extUser && extUser?.objectId) {
-            extUser.TenantId.RequestBody = updateRes?.RequestBody;
-            extUser.TenantId.RequestSubject = updateRes?.RequestSubject;
-            extUser.TenantId.EmailEditorType = updateRes?.EmailEditorType;
+          extUser.TenantId.RequestBody = updateRes?.RequestBody;
+          extUser.TenantId.RequestSubject = updateRes?.RequestSubject;
+          extUser.TenantId.EmailEditorType = updateRes?.EmailEditorType;
           const _extUser = JSON.parse(JSON.stringify(extUser));
           localStorage.setItem("Extand_Class", JSON.stringify([_extUser]));
         }
@@ -233,9 +233,9 @@ const MailTemplateEditor = ({
         });
 
         if (extUser && extUser?.objectId) {
-            extUser.TenantId.RequestBody = "";
-            extUser.TenantId.RequestSubject = "";
-            extUser.TenantId.EmailEditorType = emailEditor;
+          extUser.TenantId.RequestBody = "";
+          extUser.TenantId.RequestSubject = "";
+          extUser.TenantId.EmailEditorType = emailEditor;
           const _extUser = JSON.parse(JSON.stringify(extUser));
           localStorage.setItem("Extand_Class", JSON.stringify([_extUser]));
           dispatch(
@@ -272,9 +272,9 @@ const MailTemplateEditor = ({
           }
         });
         if (extUser && extUser?.objectId) {
-            extUser.TenantId.CompletionBody = "";
-            extUser.TenantId.CompletionSubject = "";
-            extUser.TenantId.EmailEditorType = emailEditor;
+          extUser.TenantId.CompletionBody = "";
+          extUser.TenantId.CompletionSubject = "";
+          extUser.TenantId.EmailEditorType = emailEditor;
           const _extUser = JSON.parse(JSON.stringify(extUser));
           localStorage.setItem("Extand_Class", JSON.stringify([_extUser]));
           dispatch(
@@ -324,16 +324,16 @@ const MailTemplateEditor = ({
               </div>
             )}
             {
-                isDefaultMail?.requestMail && (
-                  <div className="absolute backdrop-blur-[2px] flex w-full h-full justify-center items-center bg-black/10 rounded-box select-none z-20">
-                    <button
-                      onClick={() => handleModifyMail("request")}
-                      className="op-btn op-btn-primary shadow-lg"
-                    >
-                      {t("modify")}
-                    </button>
-                  </div>
-                )
+              isDefaultMail?.requestMail && (
+                <div className="absolute backdrop-blur-[2px] flex w-full h-full justify-center items-center bg-black/10 rounded-box select-none z-20">
+                  <button
+                    onClick={() => handleModifyMail("request")}
+                    className="op-btn op-btn-primary shadow-lg"
+                  >
+                    {t("modify")}
+                  </button>
+                </div>
+              )
             }
             <form
               onSubmit={handleSaveRequestEmail}
@@ -410,16 +410,16 @@ const MailTemplateEditor = ({
               </div>
             )}
             {
-                isDefaultMail?.completionMail && (
-                  <div className="absolute backdrop-blur-[2px] flex w-full h-full justify-center items-center bg-black/10 rounded-box select-none z-20">
-                    <button
-                      onClick={() => handleModifyMail("completion")}
-                      className="op-btn op-btn-primary shadow-lg"
-                    >
-                      {t("modify")}
-                    </button>
-                  </div>
-                )
+              isDefaultMail?.completionMail && (
+                <div className="absolute backdrop-blur-[2px] flex w-full h-full justify-center items-center bg-black/10 rounded-box select-none z-20">
+                  <button
+                    onClick={() => handleModifyMail("completion")}
+                    className="op-btn op-btn-primary shadow-lg"
+                  >
+                    {t("modify")}
+                  </button>
+                </div>
+              )
             }
             <form
               onSubmit={handleSaveCompletionEmail}

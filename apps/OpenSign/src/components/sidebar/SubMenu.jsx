@@ -4,7 +4,7 @@ import { NavLink } from "react-router";
 
 const Submenu = ({ item, closeSidebar, toggleSubmenu, submenuOpen }) => {
   const appName =
-    "OpenSign™";
+    "Glocation";
   const drivename = appName === "OpenSign™" ? "OpenSign™" : "";
   const { t } = useTranslation();
   const { title, icon, children } = item;
@@ -27,11 +27,10 @@ const Submenu = ({ item, closeSidebar, toggleSubmenu, submenuOpen }) => {
             {t(`sidebar.${item.title}`, { appName })}
           </span>
           <i
-            className={`${
-              submenuOpen[item.title]
+            className={`${submenuOpen[item.title]
                 ? "fa-light fa-angle-down"
                 : "fa-light fa-angle-right"
-            }`}
+              }`}
             aria-hidden="true"
           ></i>
         </div>

@@ -76,14 +76,14 @@ function GuestLogin() {
 
   //function generate serverUrl and parseAppId from url and save it in local storage
   const handleServerUrl = async () => {
-      setAppLogo(logo);
+    setAppLogo(logo);
     const favicon = localStorage.getItem("favicon");
 
     localStorage.clear(); // Clears everything
     localStorage.setItem("favicon", favicon);
     localStorage.setItem(
       "appname",
-        "OpenSign™"
+      "Glocation"
     );
     //save isGuestSigner true in local to handle login flow header in mobile view
     localStorage.setItem("isGuestSigner", true);
@@ -340,12 +340,12 @@ function GuestLogin() {
                     className="op-btn op-btn-primary flex items-center"
                     onClick={(e) => {
                       e.preventDefault();
-                        SendOtp();
+                      SendOtp();
                     }}
                     disabled={loading}
                   >
-                        <i className="fa-light fa-message-sms mr-2"></i>
-                        {loading ? t("loading") : t("get-verification-code")}
+                    <i className="fa-light fa-message-sms mr-2"></i>
+                    {loading ? t("loading") : t("get-verification-code")}
                   </button>
                 </div>
               </div>

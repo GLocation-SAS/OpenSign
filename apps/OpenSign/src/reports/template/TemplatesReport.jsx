@@ -53,7 +53,7 @@ const TemplatesReport = (props) => {
   const titleElement = useElSize(titleRef);
   const { prefillImg, isBulkLoader } = useSelector((state) => state.widget);
   const appName =
-    "OpenSign™";
+    "Glocation";
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -199,14 +199,14 @@ const TemplatesReport = (props) => {
         const teamtRes = await Parse.Cloud.run("getteams", { active: true });
         if (teamtRes.length > 0) {
           const _teamRes = JSON.parse(JSON.stringify(teamtRes));
-            const selected = _teamRes.map(
-              (x) =>
-                x.Name === "All Users" && {
-                  label: x.Name,
-                  value: x.objectId
-                }
-            );
-            setSelectedTeam(selected);
+          const selected = _teamRes.map(
+            (x) =>
+              x.Name === "All Users" && {
+                label: x.Name,
+                value: x.objectId
+              }
+          );
+          setSelectedTeam(selected);
         }
       }
     } catch (err) {
@@ -251,7 +251,7 @@ const TemplatesReport = (props) => {
   // `handleURL` is used to open microapp
   const handleURL = async (item, act) => {
     if (act.hoverLabel === "Edit") {
-        navigate(`/${act.redirectUrl}/${item.objectId}`);
+      navigate(`/${act.redirectUrl}/${item.objectId}`);
     } else {
       // handle Use template
       const placeholder = item?.Placeholders || [];
@@ -643,8 +643,8 @@ const TemplatesReport = (props) => {
     const encodeBase64 = user.email
       ? btoa(`${doc.objectId}/${user.email}`)
       : btoa(
-          `${doc.objectId}/${user.signerPtr.Email}/${user.signerPtr.objectId}`
-        );
+        `${doc.objectId}/${user.signerPtr.Email}/${user.signerPtr.objectId}`
+      );
     const expireDate = doc.ExpiryDate.iso;
     const newDate = new Date(expireDate);
     const localExpireDate = newDate.toLocaleDateString("en-US", {
@@ -679,9 +679,9 @@ const TemplatesReport = (props) => {
     const res = replaceMailVaribles(subject, body, variables);
     setEmailEditorType(
       doc?.EmailEditorType?.request ||
-        doc?.ExtUserPtr?.EmailEditorType?.request ||
-        doc?.ExtUserPtr?.TenantId?.EmailEditorType?.request ||
-        "basic"
+      doc?.ExtUserPtr?.EmailEditorType?.request ||
+      doc?.ExtUserPtr?.TenantId?.EmailEditorType?.request ||
+      "basic"
     );
     setMail((prev) => ({
       ...prev,
@@ -977,12 +977,12 @@ const TemplatesReport = (props) => {
             const body = tenantDetails?.RequestBody ?? "";
             //customize mail state is handle to when user want to customize already set tenant email format then use that format
             const userSubject =
-                  subject;
+              subject;
             const userBody =
-                  body;
+              body;
             const finalBody = userBody || defaultMailBody;
             const emailEditorType =
-                  tenantDetails?.EmailEditorType?.request;
+              tenantDetails?.EmailEditorType?.request;
             setEmailEditorType(emailEditorType || "basic");
             setCustomizeMail({
               subject: userSubject || defaultMailSubject,
@@ -1149,15 +1149,14 @@ const TemplatesReport = (props) => {
           </div>
         )}
         <div
-          className={`overflow-auto w-full border-b ${
-            props.List?.length > 0
+          className={`overflow-auto w-full border-b ${props.List?.length > 0
               ? isDashboard
                 ? "min-h-[317px]"
                 : currentList?.length === props.docPerPage
                   ? "h-fit"
                   : "h-screen"
               : ""
-          }`}
+            }`}
         >
           <table className="op-table border-collapse w-full mb-4">
             <thead className="text-[14px] text-center">
@@ -1180,11 +1179,10 @@ const TemplatesReport = (props) => {
                 !props.searchLoader &&
                 currentList.map((item, index) => (
                   <tr
-                    className={`${
-                      currentList?.length === props.docPerPage
+                    className={`${currentList?.length === props.docPerPage
                         ? "last:border-none"
                         : ""
-                    } border-y-[1px] `}
+                      } border-y-[1px] `}
                     key={index}
                   >
                     {props?.heading?.map((col) => (
@@ -1208,73 +1206,72 @@ const TemplatesReport = (props) => {
                               {(item.ExtUserPtr?.objectId ===
                                 extClass?.[0]?.objectId ||
                                 act.btnLabel === "Use") && (
-                                <div
-                                  role="button"
-                                  data-tut={act?.selector}
-                                  key={index}
-                                  data-dropdown-root="1"
-                                  onClick={() => handleActionBtn(act, item)}
-                                  title={t(`btnLabel.${act.hoverLabel}`)}
-                                  className={
-                                    act.action !== "option"
-                                      ? `${
-                                          act?.btnColor || ""
+                                  <div
+                                    role="button"
+                                    data-tut={act?.selector}
+                                    key={index}
+                                    data-dropdown-root="1"
+                                    onClick={() => handleActionBtn(act, item)}
+                                    title={t(`btnLabel.${act.hoverLabel}`)}
+                                    className={
+                                      act.action !== "option"
+                                        ? `${act?.btnColor || ""
                                         } op-btn op-btn-sm mr-1`
-                                      : "text-base-content focus:outline-none text-lg mr-2 relative"
-                                  }
-                                >
-                                  <i className={act.btnIcon}></i>
-                                  {act.btnLabel && (
-                                    <span className="uppercase font-medium">
-                                      {
-                                            `${t(`btnLabel.${act.btnLabel}`)}`
-                                      }
-                                    </span>
-                                  )}
-                                  {/* template report */}
-                                  {isOption[item.objectId] &&
-                                    act.action === "option" && (
-                                      <ul className="absolute -right-1 top-auto z-[70] w-52 op-dropdown-content op-menu op-menu-sm shadow-black/20 shadow bg-base-100 text-base-content rounded-box">
-                                        {act.subaction?.map((subact) => (
-                                          <li
-                                            key={subact.btnId}
-                                            onClick={() =>
-                                              handleActionBtn(subact, item)
-                                            }
-                                            title={t(
-                                              `btnLabel.${subact.btnLabel}`
-                                            )}
-                                          >
-                                            <span className="flex items-center justify-between">
-                                              <span className="text-[13px] capitalize font-medium">
-                                                <i
-                                                  className={`${subact.btnIcon} mr-2`}
-                                                ></i>
-                                                {subact.btnLabel &&
-                                                  t(
-                                                    `btnLabel.${subact.btnLabel}`
-                                                  )}
-                                                <span className="ml-0.5">
-                                                  {subact?.help && (
-                                                    <Tooltip
-                                                      id={`${subact.btnLabel}-${item.objectId}`}
-                                                      message={t(subact?.help)}
-                                                    />
-                                                  )}
-                                                </span>
-                                              </span>
-                                              {subact.secIcon && (
-                                                <i
-                                                  className={`${subact.secIcon} ml-1.5`}
-                                                ></i>
-                                              )}
-                                            </span>
-                                          </li>
-                                        ))}
-                                      </ul>
+                                        : "text-base-content focus:outline-none text-lg mr-2 relative"
+                                    }
+                                  >
+                                    <i className={act.btnIcon}></i>
+                                    {act.btnLabel && (
+                                      <span className="uppercase font-medium">
+                                        {
+                                          `${t(`btnLabel.${act.btnLabel}`)}`
+                                        }
+                                      </span>
                                     )}
-                                </div>
-                              )}
+                                    {/* template report */}
+                                    {isOption[item.objectId] &&
+                                      act.action === "option" && (
+                                        <ul className="absolute -right-1 top-auto z-[70] w-52 op-dropdown-content op-menu op-menu-sm shadow-black/20 shadow bg-base-100 text-base-content rounded-box">
+                                          {act.subaction?.map((subact) => (
+                                            <li
+                                              key={subact.btnId}
+                                              onClick={() =>
+                                                handleActionBtn(subact, item)
+                                              }
+                                              title={t(
+                                                `btnLabel.${subact.btnLabel}`
+                                              )}
+                                            >
+                                              <span className="flex items-center justify-between">
+                                                <span className="text-[13px] capitalize font-medium">
+                                                  <i
+                                                    className={`${subact.btnIcon} mr-2`}
+                                                  ></i>
+                                                  {subact.btnLabel &&
+                                                    t(
+                                                      `btnLabel.${subact.btnLabel}`
+                                                    )}
+                                                  <span className="ml-0.5">
+                                                    {subact?.help && (
+                                                      <Tooltip
+                                                        id={`${subact.btnLabel}-${item.objectId}`}
+                                                        message={t(subact?.help)}
+                                                      />
+                                                    )}
+                                                  </span>
+                                                </span>
+                                                {subact.secIcon && (
+                                                  <i
+                                                    className={`${subact.secIcon} ml-1.5`}
+                                                  ></i>
+                                                )}
+                                              </span>
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      )}
+                                  </div>
+                                )}
                               <ModalUi
                                 title={t("btnLabel.Duplicate")}
                                 isOpen={isModal["duplicate_" + item.objectId]}
@@ -1334,26 +1331,26 @@ const TemplatesReport = (props) => {
                       {isShareWith[item.objectId] && (
                         <div className="op-modal op-modal-open">
                           <div className="max-h-90 bg-base-100 w-[95%] md:max-w-[500px] rounded-box relative">
-                                  <h3 className="text-base-content font-bold text-lg pt-[15px] px-[20px]">
-                                    {t("share-with")}
-                                  </h3>
-                                  <div
-                                    className="op-btn op-btn-sm op-btn-circle op-btn-ghost text-base-content absolute right-2 top-2 z-40"
-                                    onClick={() => setIsShareWith({})}
-                                  >
-                                    ✕
-                                  </div>
-                                  <div className="px-2 mt-3 w-full h-full">
-                                    <div className="op-input op-input-bordered op-input-sm w-full h-full text-[13px] break-all">
-                                      {selectedTeam?.[0]?.label}
-                                    </div>
-                                  </div>
-                                  <button
-                                    onClick={(e) => handleShareWith(e, item)}
-                                    className="op-btn op-btn-primary ml-[10px] my-3"
-                                  >
-                                    {t("submit")}
-                                  </button>
+                            <h3 className="text-base-content font-bold text-lg pt-[15px] px-[20px]">
+                              {t("share-with")}
+                            </h3>
+                            <div
+                              className="op-btn op-btn-sm op-btn-circle op-btn-ghost text-base-content absolute right-2 top-2 z-40"
+                              onClick={() => setIsShareWith({})}
+                            >
+                              ✕
+                            </div>
+                            <div className="px-2 mt-3 w-full h-full">
+                              <div className="op-input op-input-bordered op-input-sm w-full h-full text-[13px] break-all">
+                                {selectedTeam?.[0]?.label}
+                              </div>
+                            </div>
+                            <button
+                              onClick={(e) => handleShareWith(e, item)}
+                              className="op-btn op-btn-primary ml-[10px] my-3"
+                            >
+                              {t("submit")}
+                            </button>
                           </div>
                         </div>
                       )}
@@ -1390,7 +1387,7 @@ const TemplatesReport = (props) => {
                           isOpen
                           showScrollBar
                           title={
-                                t("quick-send")
+                            t("quick-send")
                           }
                           reduceWidth={"md:min-w-[80%]"}
                           isLoader={isBulkLoader}
@@ -1461,116 +1458,115 @@ const TemplatesReport = (props) => {
                         <ModalUi
                           isOpen
                           title={
-                                t("resend-mail")
+                            t("resend-mail")
                           }
                           handleClose={handleResendClose}
                         >
-                            <div className="overflow-y-auto max-h-[340px] md:max-h-[400px]">
-                              {item?.Placeholders?.filter(
-                                (user) => user?.Role !== "prefill"
-                              )?.map((user) => (
-                                <React.Fragment key={user.Id}>
-                                  {isNextStep[user.Id] && (
-                                    <div className="relative ">
-                                      {actLoader[user.Id] && (
-                                        <div className="absolute w-full h-full flex justify-center items-center bg-black bg-opacity-30 z-30">
-                                          <Loader />
-                                        </div>
-                                      )}
-                                      <form
-                                        onSubmit={(e) =>
-                                          handleResendMail(e, item, user)
-                                        }
-                                        className="w-full flex flex-col gap-2 p-3 text-base-content relative"
-                                      >
-                                        <div className="absolute right-5 text-xs z-40">
-                                          <Tooltip
-                                            id={`${user.Id}_help`}
-                                            message={t("resend-mail-help")}
-                                          />
-                                        </div>
-                                        <div>
-                                          <label
-                                            className="text-xs ml-1"
-                                            htmlFor="mailsubject"
-                                          >
-                                            {t("subject")}{" "}
-                                          </label>
-                                          <input
-                                            id="mailsubject"
-                                            className="op-input op-input-bordered op-input-sm focus:outline-none hover:border-base-content w-full text-xs"
-                                            value={mail.subject}
-                                            onChange={(e) =>
-                                              handleSubjectChange(
-                                                e.target.value,
-                                                item
-                                              )
-                                            }
-                                            onInvalid={(e) =>
-                                              e.target.setCustomValidity(
-                                                t("input-required")
-                                              )
-                                            }
-                                            onInput={(e) =>
-                                              e.target.setCustomValidity("")
-                                            }
-                                            required
-                                          />
-                                        </div>
-                                        <div>
-                                          <label
-                                            className="flex justify-between text-sm ml-1"
-                                            htmlFor="mailbody"
-                                          >
-                                            <span>{t("body")} </span>
-                                            <button
-                                              className="op-link op-link-primary"
-                                              onClick={(e) => handleSwitch(e)}
-                                            >
-                                              Switch to{" "}
-                                              {emailEditorType === "basic"
-                                                ? t("switch-to-advanced")
-                                                : t("switch-to-basic")}
-                                            </button>
-                                          </label>
-                                          <EmailEditor
-                                            type={emailEditorType}
-                                            values={mail.body || ""}
-                                            onChange={(value, type) =>
-                                              handlebodyChange(
-                                                value,
-                                                item,
-                                                type
-                                              )
-                                            }
-                                            smallscreen
-                                          />
-                                        </div>
-                                        <button
-                                          type="submit"
-                                          className="op-btn op-btn-primary"
-                                        >
-                                          {t("resend")}
-                                        </button>
-                                      </form>
-                                    </div>
-                                  )}
-                                  {Object?.keys(isNextStep) <= 0 && (
-                                    <div className="flex justify-between items-center gap-2 my-2 px-3">
-                                      <div className="text-base-content">
-                                        {user?.signerPtr?.Name || "-"}{" "}
-                                        {`<${
-                                          user?.email
-                                            ? user.email
-                                            : user.signerPtr.Email
-                                        }>`}
+                          <div className="overflow-y-auto max-h-[340px] md:max-h-[400px]">
+                            {item?.Placeholders?.filter(
+                              (user) => user?.Role !== "prefill"
+                            )?.map((user) => (
+                              <React.Fragment key={user.Id}>
+                                {isNextStep[user.Id] && (
+                                  <div className="relative ">
+                                    {actLoader[user.Id] && (
+                                      <div className="absolute w-full h-full flex justify-center items-center bg-black bg-opacity-30 z-30">
+                                        <Loader />
                                       </div>
-                                      <>{fetchUserStatus(user, item)}</>
+                                    )}
+                                    <form
+                                      onSubmit={(e) =>
+                                        handleResendMail(e, item, user)
+                                      }
+                                      className="w-full flex flex-col gap-2 p-3 text-base-content relative"
+                                    >
+                                      <div className="absolute right-5 text-xs z-40">
+                                        <Tooltip
+                                          id={`${user.Id}_help`}
+                                          message={t("resend-mail-help")}
+                                        />
+                                      </div>
+                                      <div>
+                                        <label
+                                          className="text-xs ml-1"
+                                          htmlFor="mailsubject"
+                                        >
+                                          {t("subject")}{" "}
+                                        </label>
+                                        <input
+                                          id="mailsubject"
+                                          className="op-input op-input-bordered op-input-sm focus:outline-none hover:border-base-content w-full text-xs"
+                                          value={mail.subject}
+                                          onChange={(e) =>
+                                            handleSubjectChange(
+                                              e.target.value,
+                                              item
+                                            )
+                                          }
+                                          onInvalid={(e) =>
+                                            e.target.setCustomValidity(
+                                              t("input-required")
+                                            )
+                                          }
+                                          onInput={(e) =>
+                                            e.target.setCustomValidity("")
+                                          }
+                                          required
+                                        />
+                                      </div>
+                                      <div>
+                                        <label
+                                          className="flex justify-between text-sm ml-1"
+                                          htmlFor="mailbody"
+                                        >
+                                          <span>{t("body")} </span>
+                                          <button
+                                            className="op-link op-link-primary"
+                                            onClick={(e) => handleSwitch(e)}
+                                          >
+                                            Switch to{" "}
+                                            {emailEditorType === "basic"
+                                              ? t("switch-to-advanced")
+                                              : t("switch-to-basic")}
+                                          </button>
+                                        </label>
+                                        <EmailEditor
+                                          type={emailEditorType}
+                                          values={mail.body || ""}
+                                          onChange={(value, type) =>
+                                            handlebodyChange(
+                                              value,
+                                              item,
+                                              type
+                                            )
+                                          }
+                                          smallscreen
+                                        />
+                                      </div>
+                                      <button
+                                        type="submit"
+                                        className="op-btn op-btn-primary"
+                                      >
+                                        {t("resend")}
+                                      </button>
+                                    </form>
+                                  </div>
+                                )}
+                                {Object?.keys(isNextStep) <= 0 && (
+                                  <div className="flex justify-between items-center gap-2 my-2 px-3">
+                                    <div className="text-base-content">
+                                      {user?.signerPtr?.Name || "-"}{" "}
+                                      {`<${user?.email
+                                          ? user.email
+                                          : user.signerPtr.Email
+                                        }>`}
                                     </div>
-                                  )}
-                                </React.Fragment>
-                              ))}
-                            </div>
+                                    <>{fetchUserStatus(user, item)}</>
+                                  </div>
+                                )}
+                              </React.Fragment>
+                            ))}
+                          </div>
                         </ModalUi>
                       )}
                       <ModalUi
@@ -1612,9 +1608,8 @@ const TemplatesReport = (props) => {
           </table>
           {(props.searchLoader || props.List?.length <= 0) && (
             <div
-              className={`${
-                isDashboard ? "h-[317px]" : ""
-              } flex flex-col items-center justify-center w-ful bg-base-100 text-base-content rounded-xl py-4`}
+              className={`${isDashboard ? "h-[317px]" : ""
+                } flex flex-col items-center justify-center w-ful bg-base-100 text-base-content rounded-xl py-4`}
             >
               {props.searchLoader ? (
                 <>
@@ -1652,9 +1647,8 @@ const TemplatesReport = (props) => {
               key={i}
               onClick={() => setCurrentPage(x)}
               disabled={x === "..."}
-              className={`${
-                x === currentPage ? "op-btn-active" : ""
-              } op-join-item op-btn op-btn-sm`}
+              className={`${x === currentPage ? "op-btn-active" : ""
+                } op-join-item op-btn op-btn-sm`}
             >
               {x}
             </button>
@@ -1710,8 +1704,8 @@ const TemplatesReport = (props) => {
                         {currUserId
                           ? t("placeholder-mail-alert-you")
                           : t("placeholder-mail-alert", {
-                              name: signerList[0]?.Name
-                            })}
+                            name: signerList[0]?.Name
+                          })}
                       </p>
                     ) : (
                       <p>{t("placeholder-alert-4")}</p>

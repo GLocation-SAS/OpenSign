@@ -30,7 +30,7 @@ const AppLoader = () => {
 };
 function Opensigndrive() {
   const appName =
-    "OpenSign™";
+    "Glocation";
   const drivename = appName === "OpenSign™" ? "OpenSign™" : "";
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -135,7 +135,7 @@ function Opensigndrive() {
     }
   ];
   const getDetails = async () => {
-      getPdfDocumentList();
+    getPdfDocumentList();
   };
   //function for get all pdf document list
   const getPdfDocumentList = async (disbaleLoading) => {

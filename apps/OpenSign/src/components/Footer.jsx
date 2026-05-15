@@ -4,7 +4,7 @@ import axios from "axios";
 import { openInNewTab } from "../constant/Utils";
 import { useTranslation } from "react-i18next";
 const Footer = () => {
-  const appName = "OpenSign™";
+  const appName = "Glocation";
   const { t } = useTranslation();
   const [showButton, setShowButton] = useState(false);
   const [version, setVersion] = useState("");
@@ -59,9 +59,8 @@ const Footer = () => {
         </aside>
       </footer>
       <button
-        className={`${
-          showButton ? "block" : "hidden"
-        } fixed bottom-4 right-4 px-3 p-2 text-xl op-bg-secondary text-white rounded focus:outline-none`}
+        className={`${showButton ? "block" : "hidden"
+          } fixed bottom-4 right-4 px-3 p-2 text-xl op-bg-secondary text-white rounded focus:outline-none`}
         onClick={scrollToTop}
       >
         <i className="fa-light fa-angle-up"></i>

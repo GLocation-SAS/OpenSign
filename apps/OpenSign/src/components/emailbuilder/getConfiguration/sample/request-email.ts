@@ -3,29 +3,29 @@ import { TEditorConfiguration } from "../../documents/editor/core";
 const getRequestEmail = (
 ): TEditorConfiguration => {
   const appName =
-    "OpenSign™";
+    "Glocation";
 
   const logoBlock =
-        {
-          "block-1709571212684": {
-            type: "Image",
-            data: {
-              style: {
-                padding: { top: 24, bottom: 24, right: 24, left: 24 }
-              },
-              props: {
-                width: null,
-                height: 50,
-                url: "https://qikinnovation.ams3.digitaloceanspaces.com/logo.png",
-                alt: "logo",
-                linkHref: null,
-                contentAlignment: "middle"
-              }
-            }
-          }
-        };
+  {
+    "block-1709571212684": {
+      type: "Image",
+      data: {
+        style: {
+          padding: { top: 24, bottom: 24, right: 24, left: 24 }
+        },
+        props: {
+          width: null,
+          height: 50,
+          url: "https://qikinnovation.ams3.digitaloceanspaces.com/logo.png",
+          alt: "logo",
+          linkHref: null,
+          contentAlignment: "middle"
+        }
+      }
+    }
+  };
   const logoBlockId =
-        ["block-1709571212684"];
+    ["block-1709571212684"];
 
   return {
     root: {

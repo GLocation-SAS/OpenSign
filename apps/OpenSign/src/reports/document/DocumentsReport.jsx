@@ -43,7 +43,7 @@ const DocumentsReport = (props) => {
   const titleRef = useRef(null);
   const titleElement = useElSize(titleRef);
   const appName =
-    "OpenSign™";
+    "Glocation";
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -209,12 +209,12 @@ const DocumentsReport = (props) => {
           const body = tenantDetails?.RequestBody ?? "";
           //customize mail state is handle to when user want to customize already set tenant email format then use that format
           const userSubject =
-                subject;
+            subject;
           const userBody =
-                body;
+            body;
           const finalBody = userBody || defaultMailBody;
           const emailEditorType =
-                tenantDetails?.EmailEditorType;
+            tenantDetails?.EmailEditorType;
           setEmailEditorType(emailEditorType?.request || "basic");
           setCustomizeMail({
             subject: userSubject || defaultMailSubject,
@@ -456,8 +456,7 @@ const DocumentsReport = (props) => {
     };
     await axios
       .put(
-        `${localStorage.getItem("baseUrl")}classes/contracts_Document/${
-          item.objectId
+        `${localStorage.getItem("baseUrl")}classes/contracts_Document/${item.objectId
         }`,
         data,
         {
@@ -618,8 +617,8 @@ const DocumentsReport = (props) => {
     const encodeBase64 = user.email
       ? btoa(`${doc.objectId}/${user.email}`)
       : btoa(
-          `${doc.objectId}/${user.signerPtr.Email}/${user.signerPtr.objectId}`
-        );
+        `${doc.objectId}/${user.signerPtr.Email}/${user.signerPtr.objectId}`
+      );
     const expireDate = doc.ExpiryDate.iso;
     const newDate = new Date(expireDate);
     const localExpireDate = newDate.toLocaleDateString("en-US", {
@@ -659,9 +658,9 @@ const DocumentsReport = (props) => {
     }));
     setEmailEditorType(
       doc?.EmailEditorType?.request ||
-        doc?.ExtUserPtr?.EmailEditorType?.request ||
-        doc?.ExtUserPtr?.TenantId?.EmailEditorType?.request ||
-        "basic"
+      doc?.ExtUserPtr?.EmailEditorType?.request ||
+      doc?.ExtUserPtr?.TenantId?.EmailEditorType?.request ||
+      "basic"
     );
     setIsNextStep({ [user.Id]: true });
   };
@@ -1174,15 +1173,14 @@ const DocumentsReport = (props) => {
           </div>
         )}
         <div
-          className={`overflow-auto w-full border-b ${
-            props.List?.length > 0
+          className={`overflow-auto w-full border-b ${props.List?.length > 0
               ? isDashboard
                 ? "min-h-[317px]"
                 : currentList?.length === props.docPerPage
                   ? "h-fit"
                   : "h-screen"
               : ""
-          }`}
+            }`}
         >
           <table className="op-table border-collapse w-full mb-4">
             <thead className="text-[14px] text-center">
@@ -1205,11 +1203,10 @@ const DocumentsReport = (props) => {
                 !props.searchLoader &&
                 currentList.map((item, index) => (
                   <tr
-                    className={`${
-                      currentList?.length === props.docPerPage
+                    className={`${currentList?.length === props.docPerPage
                         ? "last:border-none"
                         : ""
-                    } border-y-[1px] `}
+                      } border-y-[1px] `}
                     key={index}
                   >
                     {props?.heading?.map((col) => (
@@ -1367,7 +1364,7 @@ const DocumentsReport = (props) => {
                                 >
                                   <i className="fa-light fa-plus"></i>{" "}
                                   {
-                                        `${t(`btnLabel.Quick send`)}`
+                                    `${t(`btnLabel.Quick send`)}`
                                   }
                                 </button>
                                 <button
@@ -1455,8 +1452,8 @@ const DocumentsReport = (props) => {
                               </span>
                               {item?.ExpiryDate?.iso
                                 ? formatDateToDdMmmYyyy(
-                                    new Date(item?.ExpiryDate?.iso)
-                                  )
+                                  new Date(item?.ExpiryDate?.iso)
+                                )
                                 : t("no-data")}
                             </div>
                             <label className="mr-2">
@@ -1520,7 +1517,7 @@ const DocumentsReport = (props) => {
                           isOpen
                           showScrollBar
                           title={
-                                t("quick-send")
+                            t("quick-send")
                           }
                           reduceWidth={"md:min-w-[80%]"}
                           isLoader={isBulkLoader}
@@ -1627,115 +1624,114 @@ const DocumentsReport = (props) => {
                         <ModalUi
                           isOpen
                           title={
-                                t("resend-mail")
+                            t("resend-mail")
                           }
                           handleClose={handleResendClose}
                         >
-                            <div className="overflow-y-auto max-h-[340px] md:max-h-[400px]">
-                              {item?.Placeholders?.filter(
-                                (user) => user?.Role !== "prefill"
-                              )?.map((user) => (
-                                <React.Fragment key={user.Id}>
-                                  {isNextStep[user.Id] && (
-                                    <div className="relative ">
-                                      {actLoader[user.Id] && (
-                                        <div className="absolute w-full h-full flex justify-center items-center bg-black bg-opacity-30 z-30">
-                                          <Loader />
-                                        </div>
-                                      )}
-                                      <form
-                                        onSubmit={(e) =>
-                                          handleResendMail(e, item, user)
-                                        }
-                                        className="w-full flex flex-col gap-2 p-3 text-base-content relative"
-                                      >
-                                        <div className="absolute right-5 text-xs z-40">
-                                          <Tooltip
-                                            id={`${user.Id}_help`}
-                                            message={t("resend-mail-help")}
-                                          />
-                                        </div>
-                                        <div>
-                                          <label
-                                            className="text-xs ml-1"
-                                            htmlFor="mailsubject"
-                                          >
-                                            {t("subject")}{" "}
-                                          </label>
-                                          <input
-                                            id="mailsubject"
-                                            className="op-input op-input-bordered op-input-sm focus:outline-none hover:border-base-content w-full text-xs"
-                                            value={mail.subject}
-                                            onChange={(e) =>
-                                              handleSubjectChange(
-                                                e.target.value,
-                                                item
-                                              )
-                                            }
-                                            onInvalid={(e) =>
-                                              e.target.setCustomValidity(
-                                                t("input-required")
-                                              )
-                                            }
-                                            onInput={(e) =>
-                                              e.target.setCustomValidity("")
-                                            }
-                                            required
-                                          />
-                                        </div>
-                                        <div>
-                                          <label
-                                            className="flex justify-between text-sm ml-1"
-                                            htmlFor="mailbody"
-                                          >
-                                            <span>{t("body")} </span>
-                                            <button
-                                              className="op-link op-link-primary"
-                                              onClick={(e) => handleSwitch(e)}
-                                            >
-                                              {emailEditorType === "basic"
-                                                ? t("switch-to-advanced")
-                                                : t("switch-to-basic")}
-                                            </button>
-                                          </label>
-                                          <EmailEditor
-                                            type={emailEditorType}
-                                            values={mail.body || ""}
-                                            onChange={(value, type) =>
-                                              handlebodyChange(
-                                                value,
-                                                item,
-                                                type
-                                              )
-                                            }
-                                            smallscreen
-                                          />
-                                        </div>
-                                        <button
-                                          type="submit"
-                                          className="op-btn op-btn-primary"
-                                        >
-                                          {t("resend")}
-                                        </button>
-                                      </form>
-                                    </div>
-                                  )}
-                                  {Object?.keys(isNextStep) <= 0 && (
-                                    <div className="flex justify-between items-center gap-2 my-2 px-3">
-                                      <div className="text-base-content">
-                                        {user?.signerPtr?.Name || "-"}{" "}
-                                        {`<${
-                                          user?.email
-                                            ? user.email
-                                            : user.signerPtr.Email
-                                        }>`}
+                          <div className="overflow-y-auto max-h-[340px] md:max-h-[400px]">
+                            {item?.Placeholders?.filter(
+                              (user) => user?.Role !== "prefill"
+                            )?.map((user) => (
+                              <React.Fragment key={user.Id}>
+                                {isNextStep[user.Id] && (
+                                  <div className="relative ">
+                                    {actLoader[user.Id] && (
+                                      <div className="absolute w-full h-full flex justify-center items-center bg-black bg-opacity-30 z-30">
+                                        <Loader />
                                       </div>
-                                      <>{fetchUserStatus(user, item)}</>
+                                    )}
+                                    <form
+                                      onSubmit={(e) =>
+                                        handleResendMail(e, item, user)
+                                      }
+                                      className="w-full flex flex-col gap-2 p-3 text-base-content relative"
+                                    >
+                                      <div className="absolute right-5 text-xs z-40">
+                                        <Tooltip
+                                          id={`${user.Id}_help`}
+                                          message={t("resend-mail-help")}
+                                        />
+                                      </div>
+                                      <div>
+                                        <label
+                                          className="text-xs ml-1"
+                                          htmlFor="mailsubject"
+                                        >
+                                          {t("subject")}{" "}
+                                        </label>
+                                        <input
+                                          id="mailsubject"
+                                          className="op-input op-input-bordered op-input-sm focus:outline-none hover:border-base-content w-full text-xs"
+                                          value={mail.subject}
+                                          onChange={(e) =>
+                                            handleSubjectChange(
+                                              e.target.value,
+                                              item
+                                            )
+                                          }
+                                          onInvalid={(e) =>
+                                            e.target.setCustomValidity(
+                                              t("input-required")
+                                            )
+                                          }
+                                          onInput={(e) =>
+                                            e.target.setCustomValidity("")
+                                          }
+                                          required
+                                        />
+                                      </div>
+                                      <div>
+                                        <label
+                                          className="flex justify-between text-sm ml-1"
+                                          htmlFor="mailbody"
+                                        >
+                                          <span>{t("body")} </span>
+                                          <button
+                                            className="op-link op-link-primary"
+                                            onClick={(e) => handleSwitch(e)}
+                                          >
+                                            {emailEditorType === "basic"
+                                              ? t("switch-to-advanced")
+                                              : t("switch-to-basic")}
+                                          </button>
+                                        </label>
+                                        <EmailEditor
+                                          type={emailEditorType}
+                                          values={mail.body || ""}
+                                          onChange={(value, type) =>
+                                            handlebodyChange(
+                                              value,
+                                              item,
+                                              type
+                                            )
+                                          }
+                                          smallscreen
+                                        />
+                                      </div>
+                                      <button
+                                        type="submit"
+                                        className="op-btn op-btn-primary"
+                                      >
+                                        {t("resend")}
+                                      </button>
+                                    </form>
+                                  </div>
+                                )}
+                                {Object?.keys(isNextStep) <= 0 && (
+                                  <div className="flex justify-between items-center gap-2 my-2 px-3">
+                                    <div className="text-base-content">
+                                      {user?.signerPtr?.Name || "-"}{" "}
+                                      {`<${user?.email
+                                          ? user.email
+                                          : user.signerPtr.Email
+                                        }>`}
                                     </div>
-                                  )}
-                                </React.Fragment>
-                              ))}
-                            </div>
+                                    <>{fetchUserStatus(user, item)}</>
+                                  </div>
+                                )}
+                              </React.Fragment>
+                            ))}
+                          </div>
                         </ModalUi>
                       )}
                       <ModalUi
@@ -1785,9 +1781,8 @@ const DocumentsReport = (props) => {
           </table>
           {(props.searchLoader || props.List?.length <= 0) && (
             <div
-              className={`${
-                isDashboard ? "h-[317px]" : ""
-              } flex flex-col items-center justify-center w-ful bg-base-100 text-base-content rounded-xl py-4`}
+              className={`${isDashboard ? "h-[317px]" : ""
+                } flex flex-col items-center justify-center w-ful bg-base-100 text-base-content rounded-xl py-4`}
             >
               {props.searchLoader ? (
                 <>
@@ -1825,9 +1820,8 @@ const DocumentsReport = (props) => {
               key={i}
               onClick={() => setCurrentPage(x)}
               disabled={x === "..."}
-              className={`${
-                x === currentPage ? "op-btn-active" : ""
-              } op-join-item op-btn op-btn-sm`}
+              className={`${x === currentPage ? "op-btn-active" : ""
+                } op-join-item op-btn op-btn-sm`}
             >
               {x}
             </button>
@@ -1882,8 +1876,8 @@ const DocumentsReport = (props) => {
                     {currUserId
                       ? t("placeholder-mail-alert-you")
                       : t("placeholder-mail-alert", {
-                          name: signerList[0]?.Name
-                        })}
+                        name: signerList[0]?.Name
+                      })}
                   </p>
                 ) : (
                   <p>{t("placeholder-alert-4")}</p>

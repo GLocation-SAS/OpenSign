@@ -31,7 +31,7 @@ const EditTemplate = ({
   isAddYourSelfCheckbox,
 }) => {
   const appName =
-    "OpenSign™";
+    "Glocation";
   const { t } = useTranslation();
   const inputFileRef = useRef(null);
   const [formData, setFormData] = useState({

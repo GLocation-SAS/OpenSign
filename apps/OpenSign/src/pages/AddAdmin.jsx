@@ -16,7 +16,7 @@ import { emailRegex } from "../constant/const";
 
 const AddAdmin = () => {
   const appName =
-    "OpenSign™";
+    "Glocation";
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -250,8 +250,8 @@ const AddAdmin = () => {
     setLengthValid(newPassword.length >= 8);
     setCaseDigitValid(
       /[a-z]/.test(newPassword) &&
-        /[A-Z]/.test(newPassword) &&
-        /\d/.test(newPassword)
+      /[A-Z]/.test(newPassword) &&
+      /\d/.test(newPassword)
     );
     setSpecialCharValid(/[!@#$%^&*()\-_=+{};:,<.>]/.test(newPassword));
   };
@@ -413,23 +413,20 @@ const AddAdmin = () => {
                     {password.length > 0 && (
                       <div className="mt-1 text-[11px]">
                         <p
-                          className={`${
-                            lengthValid ? "text-green-600" : "text-red-600"
-                          }`}
+                          className={`${lengthValid ? "text-green-600" : "text-red-600"
+                            }`}
                         >
                           {lengthValid ? "✓" : "✗"} {t("password-length")}
                         </p>
                         <p
-                          className={`${
-                            caseDigitValid ? "text-green-600" : "text-red-600"
-                          }`}
+                          className={`${caseDigitValid ? "text-green-600" : "text-red-600"
+                            }`}
                         >
                           {caseDigitValid ? "✓" : "✗"} {t("password-case")}
                         </p>
                         <p
-                          className={`${
-                            specialCharValid ? "text-green-600" : "text-red-600"
-                          }`}
+                          className={`${specialCharValid ? "text-green-600" : "text-red-600"
+                            }`}
                         >
                           {specialCharValid ? "✓" : "✗"}{" "}
                           {t("password-special-char")}

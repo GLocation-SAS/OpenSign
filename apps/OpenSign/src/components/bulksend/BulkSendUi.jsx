@@ -47,7 +47,7 @@ const ALL_EXCLUDED_TYPES = new Set([
 const BulkSendUi = (props) => {
   const { t } = useTranslation();
   const appName =
-    "OpenSign™";
+    "Glocation™";
   const dispatch = useDispatch();
   const { isBulkLoader } = useSelector((state) => state.widget);
   const [forms, setForms] = useState([]);
@@ -231,8 +231,8 @@ const BulkSendUi = (props) => {
   const signatureExist = async () => {
     setIsLoader(true);
     await initializeWidgetsWithValues();
-      checkSignatureAndRoles(props?.Placeholders);
-      setIsLoader(false);
+    checkSignatureAndRoles(props?.Placeholders);
+    setIsLoader(false);
   };
 
   const handleInputChange = (formIndex, signer, role) => {
@@ -389,138 +389,138 @@ const BulkSendUi = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-      dispatch(setBulkLoader(true));
-      if (!forms.length) {
-        alert(t("bulk-send-no-records"));
-        dispatch(setBulkLoader(false));
-        return;
-      }
-      if (validateEmails(forms)) {
-        // Create a copy of Placeholders array from props.item
-        let Placeholders = [...props.Placeholders];
+    dispatch(setBulkLoader(true));
+    if (!forms.length) {
+      alert(t("bulk-send-no-records"));
+      dispatch(setBulkLoader(false));
+      return;
+    }
+    if (validateEmails(forms)) {
+      // Create a copy of Placeholders array from props.item
+      let Placeholders = [...props.Placeholders];
 
-        let pdfUrl = props.item?.URL || props.item?.SignedUrl;
-        const prefillExist = Placeholders?.some(
+      let pdfUrl = props.item?.URL || props.item?.SignedUrl;
+      const prefillExist = Placeholders?.some(
+        (data) => data.Role === "prefill"
+      );
+      if (prefillExist) {
+        const updatedPrefills = updateWidgetValues(
+          prefillWidgets,
+          Placeholders
+        );
+        const prefillDetails = updatedPrefills?.find(
           (data) => data.Role === "prefill"
         );
-        if (prefillExist) {
-          const updatedPrefills = updateWidgetValues(
-            prefillWidgets,
-            Placeholders
-          );
-          const prefillDetails = updatedPrefills?.find(
-            (data) => data.Role === "prefill"
-          );
-          const pdfSignedUrl = await getSignedUrl(
-            pdfUrl,
-            "", //docId
-            props.item.objectId, // templateId
-          );
-          const pdfArrayBuffer = await loadPdfOnce(pdfSignedUrl);
-          if (pdfArrayBuffer === "Error") {
-            const error = t("something-went-wrong-mssg");
-            alert(error);
-            dispatch(setBulkLoader(false));
-            return;
-          }
-          pdfUrl = await handleEmbedPrefillToDoc(
-            prefillDetails,
-            1, // scale
-            pdfArrayBuffer,
-            [], // prefillImg,
-            props.item?.ExtUserPtr?.UserId?.objectId // userId
-          );
-
-          if (pdfUrl?.error) {
-            const error = pdfUrl?.error?.includes("not compatible")
-              ? t("pdf-uncompatible", { appName: appName })
-              : pdfUrl?.error;
-            alert(error);
-            dispatch(setBulkLoader(false));
-            return;
-          }
-        }
-
-        // Initialize an empty array to store updated documents
-        let Documents = [];
-        let error = "";
-        // Loop through each form
-        for (const form of forms) {
-          //checking if user enter email which already exist as a signer then add user in a signers array
-          let existSigner = [];
-          form.fields.map((data) => {
-            if (data.signer) {
-              existSigner.push(data.signer);
-            }
-          });
-          // Map through the copied Placeholders array to update email values
-          const updatedPlaceholders = Placeholders.map((placeholder) => {
-            // Find the field in the current form that matches the placeholder Id
-            const field = form.fields.find(
-              (element) => parseInt(element.fieldId) === placeholder.Id
-            );
-            // If a matching field is found, update the email value in the placeholder
-            const signer = field?.signer?.objectId ? field.signer : "";
-            if (field) {
-              if (signer) {
-                return {
-                  ...placeholder,
-                  signerObjId: field?.signer?.objectId || "",
-                  signerPtr: signer
-                };
-              } else {
-                return {
-                  ...placeholder,
-                  email: normalizeKey(field.email),
-                  signerObjId: field?.signer?.objectId || "",
-                  signerPtr: signer
-                };
-              }
-            }
-            // If no matching field is found, keep the placeholder as is
-            return placeholder;
-          });
-          const widgetValues = form?.fields?.flatMap((f) => f.widgets);
-          const updateWidgetPlaceholder = updateWidgetValues(
-            widgetValues,
-            updatedPlaceholders
-          );
-          let signedUrl = pdfUrl;
-          const placeholders = removeWidgetValues(
-            widgetValues,
-            updateWidgetPlaceholder
-          );
-          if (!signedUrl) {
-            error = t("something-went-wrong-mssg");
-            dispatch(setBulkLoader(false));
-            break;
-          }
-          // Push a new document object with updated Placeholders into the Documents array
-          if (existSigner?.length > 0) {
-            Documents.push({
-              ...props.item,
-              URL: signedUrl,
-              Placeholders: placeholders,
-              Signers: signers ? [...signers, ...existSigner] : [...existSigner]
-            });
-          } else {
-            Documents.push({
-              ...props.item,
-              URL: signedUrl,
-              Placeholders: placeholders,
-              SignatureType: props.signatureType,
-              Signers: signers
-            });
-          }
-        }
-        if (error) {
+        const pdfSignedUrl = await getSignedUrl(
+          pdfUrl,
+          "", //docId
+          props.item.objectId, // templateId
+        );
+        const pdfArrayBuffer = await loadPdfOnce(pdfSignedUrl);
+        if (pdfArrayBuffer === "Error") {
+          const error = t("something-went-wrong-mssg");
           alert(error);
-        } else {
-          await batchQuery(Documents);
+          dispatch(setBulkLoader(false));
+          return;
         }
-      } else {
-        dispatch(setBulkLoader(false));
+        pdfUrl = await handleEmbedPrefillToDoc(
+          prefillDetails,
+          1, // scale
+          pdfArrayBuffer,
+          [], // prefillImg,
+          props.item?.ExtUserPtr?.UserId?.objectId // userId
+        );
+
+        if (pdfUrl?.error) {
+          const error = pdfUrl?.error?.includes("not compatible")
+            ? t("pdf-uncompatible", { appName: appName })
+            : pdfUrl?.error;
+          alert(error);
+          dispatch(setBulkLoader(false));
+          return;
+        }
       }
+
+      // Initialize an empty array to store updated documents
+      let Documents = [];
+      let error = "";
+      // Loop through each form
+      for (const form of forms) {
+        //checking if user enter email which already exist as a signer then add user in a signers array
+        let existSigner = [];
+        form.fields.map((data) => {
+          if (data.signer) {
+            existSigner.push(data.signer);
+          }
+        });
+        // Map through the copied Placeholders array to update email values
+        const updatedPlaceholders = Placeholders.map((placeholder) => {
+          // Find the field in the current form that matches the placeholder Id
+          const field = form.fields.find(
+            (element) => parseInt(element.fieldId) === placeholder.Id
+          );
+          // If a matching field is found, update the email value in the placeholder
+          const signer = field?.signer?.objectId ? field.signer : "";
+          if (field) {
+            if (signer) {
+              return {
+                ...placeholder,
+                signerObjId: field?.signer?.objectId || "",
+                signerPtr: signer
+              };
+            } else {
+              return {
+                ...placeholder,
+                email: normalizeKey(field.email),
+                signerObjId: field?.signer?.objectId || "",
+                signerPtr: signer
+              };
+            }
+          }
+          // If no matching field is found, keep the placeholder as is
+          return placeholder;
+        });
+        const widgetValues = form?.fields?.flatMap((f) => f.widgets);
+        const updateWidgetPlaceholder = updateWidgetValues(
+          widgetValues,
+          updatedPlaceholders
+        );
+        let signedUrl = pdfUrl;
+        const placeholders = removeWidgetValues(
+          widgetValues,
+          updateWidgetPlaceholder
+        );
+        if (!signedUrl) {
+          error = t("something-went-wrong-mssg");
+          dispatch(setBulkLoader(false));
+          break;
+        }
+        // Push a new document object with updated Placeholders into the Documents array
+        if (existSigner?.length > 0) {
+          Documents.push({
+            ...props.item,
+            URL: signedUrl,
+            Placeholders: placeholders,
+            Signers: signers ? [...signers, ...existSigner] : [...existSigner]
+          });
+        } else {
+          Documents.push({
+            ...props.item,
+            URL: signedUrl,
+            Placeholders: placeholders,
+            SignatureType: props.signatureType,
+            Signers: signers
+          });
+        }
+      }
+      if (error) {
+        alert(error);
+      } else {
+        await batchQuery(Documents);
+      }
+    } else {
+      dispatch(setBulkLoader(false));
+    }
   };
 
   const batchQuery = async (Documents) => {
@@ -544,8 +544,8 @@ const BulkSendUi = (props) => {
       const message =
         err?.response?.data?.error || err?.message || "something went wrong.";
       console.error("Error sending documents:", message);
-        setMessage({ status: "failed", message });
-        // props.handleClose("error", 0, message);
+      setMessage({ status: "failed", message });
+      // props.handleClose("error", 0, message);
     } finally {
       dispatch(setBulkLoader(false));
     }
@@ -572,7 +572,7 @@ const BulkSendUi = (props) => {
                 <WizardHeader
                   steps={stepsList}
                   step={step}
-                  // onStepClick={(i) => i <= step && setStep(i)}
+                // onStepClick={(i) => i <= step && setStep(i)}
                 />
               </div>
 
@@ -591,16 +591,16 @@ const BulkSendUi = (props) => {
                   <form onSubmit={handleSubmit}>
                     <div className="min-h-max max-h-[250px] overflow-auto">
                       {
-                          forms?.length > 0 && (
-                            <div className="mx-4">
-                              <Table
-                                headers={headers}
-                                rowData={forms}
-                                handleInputChange={handleInputChange}
-                                handleWidgetDetails={handleWidgetDetails}
-                              />
-                            </div>
-                          )
+                        forms?.length > 0 && (
+                          <div className="mx-4">
+                            <Table
+                              headers={headers}
+                              rowData={forms}
+                              handleInputChange={handleInputChange}
+                              handleWidgetDetails={handleWidgetDetails}
+                            />
+                          </div>
+                        )
                       }
                     </div>
                     <div className="flex flex-row flex-wrap pb-3 pt-2 px-3 gap-3 justify-center">
