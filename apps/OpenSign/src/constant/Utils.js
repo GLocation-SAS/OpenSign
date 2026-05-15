@@ -2429,7 +2429,7 @@ export const embedWidgetsToDoc = async (
   } else {
     return {
       error:
-        "This pdf is not compatible with opensign please contact <soporte@glocation.com.co>"
+        "This pdf is not compatible with glocation please contact <soporte@glocation.com.co>"
     };
   }
 };
