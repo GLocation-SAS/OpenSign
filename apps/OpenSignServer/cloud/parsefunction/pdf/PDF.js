@@ -21,8 +21,8 @@ import sendMailWithAttachment from '../sendMailWithAttachment.js';
 const serverUrl = cloudServerUrl; // process.env.SERVER_URL;
 const APPID = serverAppId;
 const masterKEY = process.env.MASTER_KEY;
-const eSignName = 'OpenSign';
-const eSigncontact = 'hello@opensignlabs.com';
+const eSignName = 'Glocation Sign';
+const eSigncontact = 'soporte@glocation.com.co';
 const docUrl = `${serverUrl}/classes/contracts_Document`;
 const headers = {
   'Content-Type': 'application/json',

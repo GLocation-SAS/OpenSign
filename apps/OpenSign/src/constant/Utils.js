@@ -29,7 +29,7 @@ export const cellsWidget = "cells";
 export function getEnv() {
   return window?.RUNTIME_ENV || {};
 }
-const appName = "OpenSign™";
+const appName = "Glocation";
 
 export const defaultMailBody = `<p>Hi {{receiver_name}},</p><br><p>We hope this email finds you well. {{sender_name}}&nbsp;has requested you to review and sign&nbsp;{{document_title}}.</p><p>Your signature is crucial to proceed with the next steps as it signifies your agreement and authorization.</p><br><p><a href='{{signing_url}}' rel='noopener noreferrer' target='_blank'>Sign here</a></p><br><br><p>If you have any questions or need further clarification regarding the document or the signing process,  please contact the sender.</p><br><p>Thanks</p><p> Team ${appName}</p><br>`;
 export const defaultMailSubject = `{{sender_name}} has requested you to sign {{document_title}}`;
@@ -450,8 +450,8 @@ export const getSignerPages = (xyPosition = [], currentKey, signerId) => {
     const candidates =
       signerId !== undefined && signerId !== null && signerId !== ""
         ? xyPosition.filter(
-            (item) => item.Id === signerId || item.signerObjId === signerId
-          )
+          (item) => item.Id === signerId || item.signerObjId === signerId
+        )
         : xyPosition;
     for (const signer of candidates) {
       const pages = signer?.placeHolder || [];
@@ -945,12 +945,12 @@ export const createDocument = async (
       Doc?.PenColors?.length > 0 ? { PenColors: Doc?.PenColors } : {};
     const TemplateId = Doc?.objectId
       ? {
-          TemplateId: {
-            __type: "Pointer",
-            className: "contracts_Template",
-            objectId: Doc?.objectId
-          }
+        TemplateId: {
+          __type: "Pointer",
+          className: "contracts_Template",
+          objectId: Doc?.objectId
         }
+      }
       : {};
     const data = {
       Name: Doc.Name,
@@ -1371,7 +1371,7 @@ export const addInitialData = (signerPos, setXyPosition, value, userId) => {
 
 //function for embed document id
 export const embedDocId = async (pdfOriginalWH, pdfDoc, documentId) => {
-  const appName = "OpenSign™";
+  const appName = "Glocation";
   // `fontBytes` is used to embed custom font in pdf
   const fontBytes = await fileasbytes(
     "https://cdn.opensignlabs.com/webfonts/times.ttf"
@@ -1729,14 +1729,14 @@ export function onSaveImage(
           // below condition to exclude apply all for image widget
           item.type === widgetsType // && item.type !== "image"
             ? {
-                ...item,
-                SignUrl: image?.src || defaultStampImg,
-                ImageType: image?.imgType || defaultStampType,
-                options: {
-                  ...item.options,
-                  response: image?.src || defaultStampImg
-                }
+              ...item,
+              SignUrl: image?.src || defaultStampImg,
+              ImageType: image?.imgType || defaultStampType,
+              options: {
+                ...item.options,
+                response: image?.src || defaultStampImg
               }
+            }
             : item // Otherwise, keep it unchanged
       )
     }));
@@ -2429,7 +2429,7 @@ export const embedWidgetsToDoc = async (
   } else {
     return {
       error:
-        "This pdf is not compatible with opensign please contact <support@opensignlabs.com>"
+        "This pdf is not compatible with opensign please contact <soporte@glocation.com.co>"
     };
   }
 };
@@ -2673,7 +2673,7 @@ export const getAppLogo = async () => {
     if (tenant) {
       const resolvedFavicon =
         tenant?.favicon || tenant?.logo || appInfo.fev_Icon;
-      localStorage.setItem("appname", "OpenSign™");
+      localStorage.setItem("appname", "Glocation");
       localStorage.setItem("favicon", appInfo.fev_Icon);
       return {
         logo: tenant?.logo,
@@ -2940,7 +2940,7 @@ export const handleToPrint = async (event, setIsDownloading, pdfDetails) => {
 };
 const downloadCertificate = async (certificate, isZip, asBlob) => {
   try {
-    const appName = "OpenSign™";
+    const appName = "Glocation";
     const certificateUrl = certificate;
     if (isZip) {
       return certificateUrl;
@@ -3559,7 +3559,7 @@ export const flattenPdf = async (pdfFile) => {
 };
 
 export const mailTemplate = (param) => {
-  const appName = "OpenSign™";
+  const appName = "Glocation";
   const logo = `<div style='padding:10px'><img src='https://qikinnovation.ams3.digitaloceanspaces.com/logo.png' height='50' /></div>`;
 
   const subject = `${param.senderName} has requested you to sign "${param.title}"`;
@@ -3593,10 +3593,10 @@ export function formatDateTime(date, dateFormat, timeZone, is12Hour) {
   const timeFormat = is12Hour ? "hh:mm:ss a" : "HH:mm:ss";
   return dateFormat
     ? format(
-        zonedDate,
-        `${selectFormat(dateFormat)}, ${timeFormat} 'GMT' XXX`,
-        { timeZone }
-      )
+      zonedDate,
+      `${selectFormat(dateFormat)}, ${timeFormat} 'GMT' XXX`,
+      { timeZone }
+    )
     : formatTimeInTimezone(date, timeZone);
 }
 
