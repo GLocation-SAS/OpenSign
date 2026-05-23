@@ -125,37 +125,37 @@ export const config = {
   encodeParseObjectInCloudFunction: true,
   ...(isMailAdapter === true
     ? {
-        emailAdapter: {
-          module: 'parse-server-api-mail-adapter',
-          options: {
-            // The email address from which emails are sent.
-            sender: appName + ' <' + mailsender + '>',
-            // The email templates.
-            templates: {
-              // The template used by Parse Server to send an email for password
-              // reset; this is a reserved template name.
-              passwordResetEmail: {
-                subjectPath: './files/password_reset_email_subject.txt',
-                textPath: './files/password_reset_email.txt',
-                htmlPath: './files/password_reset_email.html',
-              },
-              // The template used by Parse Server to send an email for email
-              // address verification; this is a reserved template name.
-              verificationEmail: {
-                subjectPath: './files/verification_email_subject.txt',
-                textPath: './files/verification_email.txt',
-                htmlPath: './files/verification_email.html',
-              },
+      emailAdapter: {
+        module: 'parse-server-api-mail-adapter',
+        options: {
+          // The email address from which emails are sent.
+          sender: appName + ' <' + mailsender + '>',
+          // The email templates.
+          templates: {
+            // The template used by Parse Server to send an email for password
+            // reset; this is a reserved template name.
+            passwordResetEmail: {
+              subjectPath: './files/password_reset_email_subject.txt',
+              textPath: './files/password_reset_email.txt',
+              htmlPath: './files/password_reset_email.html',
             },
-            apiCallback: async ({ payload, locale }) => {
-              if (mailgunClient) {
-                const mailgunPayload = ApiPayloadConverter.mailgun(payload);
-                await mailgunClient.messages.create(mailgunDomain, mailgunPayload);
-              } else if (transporterMail) await transporterMail.sendMail(payload);
+            // The template used by Parse Server to send an email for email
+            // address verification; this is a reserved template name.
+            verificationEmail: {
+              subjectPath: './files/verification_email_subject.txt',
+              textPath: './files/verification_email.txt',
+              htmlPath: './files/verification_email.html',
             },
           },
+          apiCallback: async ({ payload, locale }) => {
+            if (mailgunClient) {
+              const mailgunPayload = ApiPayloadConverter.mailgun(payload);
+              await mailgunClient.messages.create(mailgunDomain, mailgunPayload);
+            } else if (transporterMail) await transporterMail.sendMail(payload);
+          },
         },
-      }
+      },
+    }
     : {}),
   filesAdapter: fsAdapter,
   auth: { google: { clientId: process.env.GOOGLE_CLIENT_ID }, sso: SSOAuth },
@@ -164,7 +164,7 @@ export const config = {
 };
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:
-// javascriptKey, restAPIKey, dotNetKey, clientKey
+// javascriptKey, restAPIKey, dotNetKey, clientKeyf
 
 export const app = express();
 app.use(cors());

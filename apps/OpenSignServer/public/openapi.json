@@ -50,6 +50,10 @@
     {
       "name": "documents",
       "description": "Operations about documents"
+    },
+    {
+      "name": "Cloud Functions",
+      "description": "Dynamically parsed Parse Cloud Functions"
     }
   ],
   "paths": {
@@ -644,6 +648,3961 @@
               "application/xml": {
                 "schema": {
                   "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/signPdf": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: signPdf",
+        "description": "Executes the Parse Cloud function 'signPdf' (defined in cloud/parsefunction/pdf/PDF.js).",
+        "operationId": "cloud_signPdf",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'signPdf'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "docId": {
+                    "type": "string",
+                    "description": "Value of docId"
+                  },
+                  "userId": {
+                    "type": "string",
+                    "description": "Value of userId"
+                  },
+                  "isCustomCompletionMail": {
+                    "type": "boolean",
+                    "description": "Flag indicating isCustomCompletionMail"
+                  },
+                  "mailProvider": {
+                    "type": "string",
+                    "description": "Value of mailProvider"
+                  },
+                  "signature": {
+                    "type": "string",
+                    "description": "Value of signature"
+                  },
+                  "pdfFile": {
+                    "type": "string",
+                    "description": "Value of pdfFile"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/sendmailv3": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: sendmailv3",
+        "description": "Executes the Parse Cloud function 'sendmailv3' (defined in cloud/parsefunction/sendMailv3.js).",
+        "operationId": "cloud_sendmailv3",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'sendmailv3'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "extUserId": {
+                    "type": "string",
+                    "description": "Value of extUserId"
+                  },
+                  "from": {
+                    "type": "string",
+                    "description": "Value of from"
+                  },
+                  "replyto": {
+                    "type": "string",
+                    "description": "Value of replyto"
+                  },
+                  "recipient": {
+                    "type": "string",
+                    "description": "Value of recipient"
+                  },
+                  "subject": {
+                    "type": "string",
+                    "description": "Value of subject"
+                  },
+                  "text": {
+                    "type": "string",
+                    "description": "Value of text"
+                  },
+                  "html": {
+                    "type": "string",
+                    "description": "Value of html"
+                  },
+                  "bcc": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of bcc"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/usersignup": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: usersignup",
+        "description": "Executes the Parse Cloud function 'usersignup' (defined in cloud/parsefunction/usersignup.js).",
+        "operationId": "cloud_usersignup",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'usersignup'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userDetails": {
+                    "type": "object",
+                    "description": "Object representing userDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/SendOTPMailV1": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: SendOTPMailV1",
+        "description": "Executes the Parse Cloud function 'SendOTPMailV1' (defined in cloud/parsefunction/SendMailOTPv1.js).",
+        "operationId": "cloud_SendOTPMailV1",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'SendOTPMailV1'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Value of email"
+                  },
+                  "TenantId": {
+                    "type": "string",
+                    "description": "Value of TenantId"
+                  },
+                  "docId": {
+                    "type": "string",
+                    "description": "Value of docId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/AuthLoginAsMail": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: AuthLoginAsMail",
+        "description": "Executes the Parse Cloud function 'AuthLoginAsMail' (defined in cloud/parsefunction/AuthLoginAsMail.js).",
+        "operationId": "cloud_AuthLoginAsMail",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'AuthLoginAsMail'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "otp": {
+                    "type": "string",
+                    "description": "Value of otp"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Value of email"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/getUserId": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: getUserId",
+        "description": "Executes the Parse Cloud function 'getUserId' (defined in cloud/parsefunction/getUserId.js).",
+        "operationId": "cloud_getUserId",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'getUserId'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "Value of username"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Value of email"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/getUserDetails": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: getUserDetails",
+        "description": "Executes the Parse Cloud function 'getUserDetails' (defined in cloud/parsefunction/getUserDetails.js).",
+        "operationId": "cloud_getUserDetails",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'getUserDetails'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Value of email"
+                  },
+                  "userId": {
+                    "type": "string",
+                    "description": "Value of userId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/getDocument": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: getDocument",
+        "description": "Executes the Parse Cloud function 'getDocument' (defined in cloud/parsefunction/getDocument.js).",
+        "operationId": "cloud_getDocument",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'getDocument'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "docId": {
+                    "type": "string",
+                    "description": "Value of docId"
+                  },
+                  "include": {
+                    "type": "string",
+                    "description": "Value of include"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/getDrive": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: getDrive",
+        "description": "Executes the Parse Cloud function 'getDrive' (defined in cloud/parsefunction/getDrive.js).",
+        "operationId": "cloud_getDrive",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'getDrive'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "description": "Count/Number representing limit"
+                  },
+                  "skip": {
+                    "type": "string",
+                    "description": "Value of skip"
+                  },
+                  "docId": {
+                    "type": "string",
+                    "description": "Value of docId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/getReport": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: getReport",
+        "description": "Executes the Parse Cloud function 'getReport' (defined in cloud/parsefunction/getReport.js).",
+        "operationId": "cloud_getReport",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'getReport'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reportId": {
+                    "type": "integer",
+                    "description": "Count/Number representing reportId"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "description": "Count/Number representing limit"
+                  },
+                  "skip": {
+                    "type": "string",
+                    "description": "Value of skip"
+                  },
+                  "searchTerm": {
+                    "type": "string",
+                    "description": "Value of searchTerm"
+                  },
+                  "signerStatus": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of signerStatus"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/getTemplate": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: getTemplate",
+        "description": "Executes the Parse Cloud function 'getTemplate' (defined in cloud/parsefunction/GetTemplate.js).",
+        "operationId": "cloud_getTemplate",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'getTemplate'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "templateId": {
+                    "type": "string",
+                    "description": "Value of templateId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/verifyemail": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: verifyemail",
+        "description": "Executes the Parse Cloud function 'verifyemail' (defined in cloud/parsefunction/VerifyEmail.js).",
+        "operationId": "cloud_verifyemail",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'verifyemail'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "otp": {
+                    "type": "string",
+                    "description": "Value of otp"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Value of email"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/getsignedurl": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: getsignedurl",
+        "description": "Executes the Parse Cloud function 'getsignedurl' (defined in cloud/parsefunction/getSignedUrl.js).",
+        "operationId": "cloud_getsignedurl",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'getsignedurl'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "docId": {
+                    "type": "string",
+                    "description": "Value of docId"
+                  },
+                  "templateId": {
+                    "type": "string",
+                    "description": "Value of templateId"
+                  },
+                  "url": {
+                    "type": "string",
+                    "description": "Value of url"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/batchdocuments": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: batchdocuments",
+        "description": "Executes the Parse Cloud function 'batchdocuments' (defined in cloud/parsefunction/createBatchDocs.js).",
+        "operationId": "cloud_batchdocuments",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'batchdocuments'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Documents": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of Documents"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/linkcontacttodoc": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: linkcontacttodoc",
+        "description": "Executes the Parse Cloud function 'linkcontacttodoc' (defined in cloud/parsefunction/linkContactToDoc.js).",
+        "operationId": "cloud_linkcontacttodoc",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'linkcontacttodoc'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Value of email"
+                  },
+                  "docId": {
+                    "type": "string",
+                    "description": "Value of docId"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Value of name"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "Value of phone"
+                  },
+                  "jobTitle": {
+                    "type": "string",
+                    "description": "Value of jobTitle"
+                  },
+                  "company": {
+                    "type": "string",
+                    "description": "Value of company"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/isextenduser": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: isextenduser",
+        "description": "Executes the Parse Cloud function 'isextenduser' (defined in cloud/parsefunction/isextenduser.js).",
+        "operationId": "cloud_isextenduser",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'isextenduser'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Value of email"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/getlogobydomain": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: getlogobydomain",
+        "description": "Executes the Parse Cloud function 'getlogobydomain' (defined in cloud/parsefunction/GetLogoByDomain.js).",
+        "operationId": "cloud_getlogobydomain",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'getlogobydomain'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "domain": {
+                    "type": "string",
+                    "description": "Value of domain"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/addadmin": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: addadmin",
+        "description": "Executes the Parse Cloud function 'addadmin' (defined in cloud/parsefunction/AddAdmin.js).",
+        "operationId": "cloud_addadmin",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'addadmin'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userDetails": {
+                    "type": "object",
+                    "description": "Object representing userDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/checkadminexist": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: checkadminexist",
+        "description": "Executes the Parse Cloud function 'checkadminexist' (defined in cloud/parsefunction/CheckAdminExist.js).",
+        "operationId": "cloud_checkadminexist",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'checkadminexist'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        }
+      }
+    },
+    "/functions/updateuserasadmin": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: updateuserasadmin",
+        "description": "Executes the Parse Cloud function 'updateuserasadmin' (defined in cloud/parsefunction/UpdateExistUserAsAdmin.js).",
+        "operationId": "cloud_updateuserasadmin",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'updateuserasadmin'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Value of email"
+                  },
+                  "masterkey": {
+                    "type": "string",
+                    "description": "Value of masterkey"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/newsletter": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: newsletter",
+        "description": "Executes the Parse Cloud function 'newsletter' (defined in cloud/parsefunction/Newsletter.js).",
+        "operationId": "cloud_newsletter",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'newsletter'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Value of name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Value of email"
+                  },
+                  "domain": {
+                    "type": "string",
+                    "description": "Value of domain"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/getteams": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: getteams",
+        "description": "Executes the Parse Cloud function 'getteams' (defined in cloud/parsefunction/getTeams.js).",
+        "operationId": "cloud_getteams",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'getteams'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "active": {
+                    "type": "string",
+                    "description": "Value of active"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/getcontact": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: getcontact",
+        "description": "Executes the Parse Cloud function 'getcontact' (defined in cloud/parsefunction/getContact.js).",
+        "operationId": "cloud_getcontact",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'getcontact'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contactId": {
+                    "type": "string",
+                    "description": "Value of contactId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/updatecontacttour": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: updatecontacttour",
+        "description": "Executes the Parse Cloud function 'updatecontacttour' (defined in cloud/parsefunction/updateContactTour.js).",
+        "operationId": "cloud_updatecontacttour",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'updatecontacttour'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contactId": {
+                    "type": "string",
+                    "description": "Value of contactId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/declinedoc": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: declinedoc",
+        "description": "Executes the Parse Cloud function 'declinedoc' (defined in cloud/parsefunction/declinedocument.js).",
+        "operationId": "cloud_declinedoc",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'declinedoc'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "docId": {
+                    "type": "string",
+                    "description": "Value of docId"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "description": "Value of reason"
+                  },
+                  "userId": {
+                    "type": "string",
+                    "description": "Value of userId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/gettenant": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: gettenant",
+        "description": "Executes the Parse Cloud function 'gettenant' (defined in cloud/parsefunction/getTenant.js).",
+        "operationId": "cloud_gettenant",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'gettenant'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "description": "Value of userId"
+                  },
+                  "contactId": {
+                    "type": "string",
+                    "description": "Value of contactId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/getsigners": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: getsigners",
+        "description": "Executes the Parse Cloud function 'getsigners' (defined in cloud/parsefunction/getSigners.js).",
+        "operationId": "cloud_getsigners",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'getsigners'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "search": {
+                    "type": "string",
+                    "description": "Value of search"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/savefile": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: savefile",
+        "description": "Executes the Parse Cloud function 'savefile' (defined in cloud/parsefunction/saveFile.js).",
+        "operationId": "cloud_savefile",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'savefile'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileBase64": {
+                    "type": "string",
+                    "description": "Value of fileBase64"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Value of id"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "Value of fileName"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/savecontact": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: savecontact",
+        "description": "Executes the Parse Cloud function 'savecontact' (defined in cloud/parsefunction/savecontact.js).",
+        "operationId": "cloud_savecontact",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'savecontact'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Value of name"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "Value of phone"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Value of email"
+                  },
+                  "tenantId": {
+                    "type": "string",
+                    "description": "Value of tenantId"
+                  },
+                  "company": {
+                    "type": "string",
+                    "description": "Value of company"
+                  },
+                  "jobTitle": {
+                    "type": "string",
+                    "description": "Value of jobTitle"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/isuserincontactbook": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: isuserincontactbook",
+        "description": "Executes the Parse Cloud function 'isuserincontactbook' (defined in cloud/parsefunction/isUserInContactBook.js).",
+        "operationId": "cloud_isuserincontactbook",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'isuserincontactbook'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        }
+      }
+    },
+    "/functions/updatetourstatus": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: updatetourstatus",
+        "description": "Executes the Parse Cloud function 'updatetourstatus' (defined in cloud/parsefunction/updateTourStatus.js).",
+        "operationId": "cloud_updatetourstatus",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'updatetourstatus'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "TourStatus": {
+                    "type": "string",
+                    "description": "Value of TourStatus"
+                  },
+                  "ExtUserId": {
+                    "type": "string",
+                    "description": "Value of ExtUserId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/updatesignaturetype": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: updatesignaturetype",
+        "description": "Executes the Parse Cloud function 'updatesignaturetype' (defined in cloud/parsefunction/updatesignaturetype.js).",
+        "operationId": "cloud_updatesignaturetype",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'updatesignaturetype'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "SignatureType": {
+                    "type": "string",
+                    "description": "Value of SignatureType"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/updatepreferences": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: updatepreferences",
+        "description": "Executes the Parse Cloud function 'updatepreferences' (defined in cloud/parsefunction/updatePreferences.js).",
+        "operationId": "cloud_updatepreferences",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'updatepreferences'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "SignatureType": {
+                    "type": "string",
+                    "description": "Value of SignatureType"
+                  },
+                  "NotifyOnSignatures": {
+                    "type": "string",
+                    "description": "Value of NotifyOnSignatures"
+                  },
+                  "Timezone": {
+                    "type": "string",
+                    "description": "Value of Timezone"
+                  },
+                  "UseNameAsSender": {
+                    "type": "string",
+                    "description": "Value of UseNameAsSender"
+                  },
+                  "SendinOrder": {
+                    "type": "string",
+                    "description": "Value of SendinOrder"
+                  },
+                  "IsTourEnabled": {
+                    "type": "boolean",
+                    "description": "Flag indicating IsTourEnabled"
+                  },
+                  "DateFormat": {
+                    "type": "string",
+                    "description": "Value of DateFormat"
+                  },
+                  "Is12HourTime": {
+                    "type": "boolean",
+                    "description": "Flag indicating Is12HourTime"
+                  },
+                  "IsLTVEnabled": {
+                    "type": "boolean",
+                    "description": "Flag indicating IsLTVEnabled"
+                  },
+                  "DownloadFilenameFormat": {
+                    "type": "string",
+                    "description": "Value of DownloadFilenameFormat"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/createduplicate": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: createduplicate",
+        "description": "Executes the Parse Cloud function 'createduplicate' (defined in cloud/parsefunction/createDuplicate.js).",
+        "operationId": "cloud_createduplicate",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'createduplicate'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "templateId": {
+                    "type": "string",
+                    "description": "Value of templateId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/createbatchcontact": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: createbatchcontact",
+        "description": "Executes the Parse Cloud function 'createbatchcontact' (defined in cloud/parsefunction/createBatchContact.js).",
+        "operationId": "cloud_createbatchcontact",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'createbatchcontact'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contacts": {
+                    "type": "string",
+                    "description": "Value of contacts"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/generatecertificate": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: generatecertificate",
+        "description": "Executes the Parse Cloud function 'generatecertificate' (defined in cloud/parsefunction/generateCertificatebydocId.js).",
+        "operationId": "cloud_generatecertificate",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'generatecertificate'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "docId": {
+                    "type": "string",
+                    "description": "Value of docId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/fileupload": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: fileupload",
+        "description": "Executes the Parse Cloud function 'fileupload' (defined in cloud/parsefunction/fileUpload.js).",
+        "operationId": "cloud_fileupload",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'fileupload'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "Value of url"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/getuserlistbyorg": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: getuserlistbyorg",
+        "description": "Executes the Parse Cloud function 'getuserlistbyorg' (defined in cloud/parsefunction/getUserListByOrg.js).",
+        "operationId": "cloud_getuserlistbyorg",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'getuserlistbyorg'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "organizationId": {
+                    "type": "object",
+                    "description": "Object representing organizationId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/editcontact": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: editcontact",
+        "description": "Executes the Parse Cloud function 'editcontact' (defined in cloud/parsefunction/editContact.js).",
+        "operationId": "cloud_editcontact",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'editcontact'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contactId": {
+                    "type": "string",
+                    "description": "Value of contactId"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Value of name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Value of email"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "Value of phone"
+                  },
+                  "tenantId": {
+                    "type": "string",
+                    "description": "Value of tenantId"
+                  },
+                  "company": {
+                    "type": "string",
+                    "description": "Value of company"
+                  },
+                  "jobTitle": {
+                    "type": "string",
+                    "description": "Value of jobTitle"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/forwarddoc": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: forwarddoc",
+        "description": "Executes the Parse Cloud function 'forwarddoc' (defined in cloud/parsefunction/ForwardDoc.js).",
+        "operationId": "cloud_forwarddoc",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'forwarddoc'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "docId": {
+                    "type": "string",
+                    "description": "Value of docId"
+                  },
+                  "recipients": {
+                    "type": "string",
+                    "description": "Value of recipients"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/saveastemplate": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: saveastemplate",
+        "description": "Executes the Parse Cloud function 'saveastemplate' (defined in cloud/parsefunction/saveAsTemplate.js).",
+        "operationId": "cloud_saveastemplate",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'saveastemplate'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "docId": {
+                    "type": "string",
+                    "description": "Value of docId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/updatetenant": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: updatetenant",
+        "description": "Executes the Parse Cloud function 'updatetenant' (defined in cloud/parsefunction/updateTenant.js).",
+        "operationId": "cloud_updatetenant",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'updatetenant'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tenantId": {
+                    "type": "string",
+                    "description": "Value of tenantId"
+                  },
+                  "details": {
+                    "type": "string",
+                    "description": "Value of details"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/recreatedoc": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: recreatedoc",
+        "description": "Executes the Parse Cloud function 'recreatedoc' (defined in cloud/parsefunction/recreateDocument.js).",
+        "operationId": "cloud_recreatedoc",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'recreatedoc'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "docId": {
+                    "type": "string",
+                    "description": "Value of docId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/loginuser": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: loginuser",
+        "description": "Executes the Parse Cloud function 'loginuser' (defined in cloud/parsefunction/loginUser.js).",
+        "operationId": "cloud_loginuser",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'loginuser'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Value of email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Value of password"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/adduser": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: adduser",
+        "description": "Executes the Parse Cloud function 'adduser' (defined in cloud/parsefunction/addUser.js).",
+        "operationId": "cloud_adduser",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'adduser'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phone": {
+                    "type": "string",
+                    "description": "Value of phone"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Value of name"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Value of password"
+                  },
+                  "organization": {
+                    "type": "object",
+                    "description": "Object representing organization"
+                  },
+                  "team": {
+                    "type": "object",
+                    "description": "Object representing team"
+                  },
+                  "tenantId": {
+                    "type": "string",
+                    "description": "Value of tenantId"
+                  },
+                  "timezone": {
+                    "type": "string",
+                    "description": "Value of timezone"
+                  },
+                  "role": {
+                    "type": "string",
+                    "description": "Value of role"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Value of email"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/filterdocs": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: filterdocs",
+        "description": "Executes the Parse Cloud function 'filterdocs' (defined in cloud/parsefunction/filterDocs.js).",
+        "operationId": "cloud_filterdocs",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'filterdocs'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "searchTerm": {
+                    "type": "string",
+                    "description": "Value of searchTerm"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "description": "Count/Number representing limit"
+                  },
+                  "skip": {
+                    "type": "string",
+                    "description": "Value of skip"
+                  },
+                  "caseSensitive": {
+                    "type": "string",
+                    "description": "Value of caseSensitive"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/senddeleterequest": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: senddeleterequest",
+        "description": "Executes the Parse Cloud function 'senddeleterequest' (defined in cloud/parsefunction/sendDeleteUserMail.js).",
+        "operationId": "cloud_senddeleterequest",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'senddeleterequest'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "description": "Value of userId"
+                  },
+                  "app": {
+                    "type": "string",
+                    "description": "Value of app"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/resetpassword": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: resetpassword",
+        "description": "Executes the Parse Cloud function 'resetpassword' (defined in cloud/parsefunction/resetPassword.js).",
+        "operationId": "cloud_resetpassword",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'resetpassword'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "description": "Value of userId"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Value of password"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/savesignature": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: savesignature",
+        "description": "Executes the Parse Cloud function 'savesignature' (defined in cloud/parsefunction/saveSignature.js).",
+        "operationId": "cloud_savesignature",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'savesignature'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "signature": {
+                    "type": "string",
+                    "description": "Value of signature"
+                  },
+                  "userId": {
+                    "type": "string",
+                    "description": "Value of userId"
+                  },
+                  "initials": {
+                    "type": "string",
+                    "description": "Value of initials"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Value of id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Value of title"
+                  },
+                  "stamp": {
+                    "type": "string",
+                    "description": "Value of stamp"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/managesign": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: managesign",
+        "description": "Executes the Parse Cloud function 'managesign' (defined in cloud/parsefunction/manageSign.js).",
+        "operationId": "cloud_managesign",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'managesign'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "signature": {
+                    "type": "string",
+                    "description": "Value of signature"
+                  },
+                  "userId": {
+                    "type": "string",
+                    "description": "Value of userId"
+                  },
+                  "initials": {
+                    "type": "string",
+                    "description": "Value of initials"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Value of id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Value of title"
+                  },
+                  "stamp": {
+                    "type": "string",
+                    "description": "Value of stamp"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/getdefaultsignature": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: getdefaultsignature",
+        "description": "Executes the Parse Cloud function 'getdefaultsignature' (defined in cloud/parsefunction/getSignature.js).",
+        "operationId": "cloud_getdefaultsignature",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'getdefaultsignature'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "description": "Value of userId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/updateemailtemplates": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: updateemailtemplates",
+        "description": "Executes the Parse Cloud function 'updateemailtemplates' (defined in cloud/parsefunction/updateEmailTemplates.js).",
+        "operationId": "cloud_updateemailtemplates",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'updateemailtemplates'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tenantId": {
+                    "type": "string",
+                    "description": "Value of tenantId"
+                  },
+                  "details": {
+                    "type": "string",
+                    "description": "Value of details"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/triggerevent": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: triggerevent",
+        "description": "Executes the Parse Cloud function 'triggerevent' (defined in cloud/parsefunction/triggerEvent.js).",
+        "operationId": "cloud_triggerevent",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'triggerevent'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "event": {
+                    "type": "string",
+                    "description": "Value of event"
+                  },
+                  "body": {
+                    "type": "string",
+                    "description": "Value of body"
+                  },
+                  "contactId": {
+                    "type": "string",
+                    "description": "Value of contactId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/setwidgetpreferences": {
+      "post": {
+        "tags": [
+          "Cloud Functions"
+        ],
+        "summary": "Call Cloud Function: setwidgetpreferences",
+        "description": "Executes the Parse Cloud function 'setwidgetpreferences' (defined in cloud/parsefunction/setWidgetPreferences.js).",
+        "operationId": "cloud_setwidgetpreferences",
+        "parameters": [
+          {
+            "name": "X-Parse-Application-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Parse Application ID"
+          },
+          {
+            "name": "X-Parse-Session-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session token for authenticated requests"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed 'setwidgetpreferences'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "The return value of the cloud function"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error executing cloud function"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dateWidget": {
+                    "type": "string",
+                    "description": "Value of dateWidget"
+                  }
                 }
               }
             }
