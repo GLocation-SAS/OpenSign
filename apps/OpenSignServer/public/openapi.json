@@ -19,7 +19,12 @@
   },
   "servers": [
     {
-      "url": "https://app.opensignlabs.com/api/v1"
+      "url": "https://firmas.glocation.co/api/app",
+      "description": "Tu Servidor Local Glocation (Parse & Cloud Functions)"
+    },
+    {
+      "url": "https://firmas.glocation.co/api",
+      "description": "Tu Servidor Local Glocation (Rutas Custom)"
     }
   ],
   "tags": [

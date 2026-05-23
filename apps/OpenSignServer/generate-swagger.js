@@ -172,7 +172,7 @@ try {
   const mainJsContent = fs.readFileSync(mainJsPath, 'utf8');
 
   const importMap = new Map();
-  const importRegex = /import\s+([\s\S]+?)\s+from\s+['"]([^'"]+)['"]/g;
+  const importRegex = /import\\s+([\\s\\S]+?)\\s+from\\s+['\"]([^'\"]+)['\"]/g;
   let importMatch;
   while ((importMatch = importRegex.exec(mainJsContent)) !== null) {
     const importClause = importMatch[1];
@@ -185,9 +185,9 @@ try {
     }
   }
 
-  console.log(`Mapped ${importMap.size} imported identifiers from cloud/main.js.\n`);
+  console.log(`Mapped ${importMap.size} imported identifiers from cloud/main.js.\\n`);
 
-  const defineRegex = /Parse\.Cloud\.define\(\s*['"]([^'"]+)['"]\s*,\s*([a-zA-Z0-9_$]+)\s*\)/g;
+  const defineRegex = /Parse\\.Cloud\\.define\\(\\s*['\"]([^'\"]+)['\"]\\s*,\\s*([a-zA-Z0-9_$]+)\\s*\\)/g;
   const cloudFunctions = [];
   let defineMatch;
   while ((defineMatch = defineRegex.exec(mainJsContent)) !== null) {
@@ -200,7 +200,7 @@ try {
     }
   }
 
-  console.log(`Found ${cloudFunctions.length} Cloud Functions registered via Parse.Cloud.define.\n`);
+  console.log(`Found ${cloudFunctions.length} Cloud Functions registered via Parse.Cloud.define.\\n`);
 
   if (!openapi.tags) {
     openapi.tags = [];
@@ -299,9 +299,21 @@ try {
     console.log(`✅ Generated path: POST /functions/${name} | Params: [${params.join(', ') || 'none'}]`);
   }
 
+  // Sobrescribir los servidores para apuntar a tu propio dominio
+  openapi.servers = [
+    {
+      "url": "https://firmas.glocation.co/api/app",
+      "description": "Tu Servidor Local Glocation (Parse & Cloud Functions)"
+    },
+    {
+      "url": "https://firmas.glocation.co/api",
+      "description": "Tu Servidor Local Glocation (Rutas Custom)"
+    }
+  ];
+
   fs.writeFileSync(openapiJsonPath, JSON.stringify(openapi, null, 2), 'utf8');
 
-  console.log('\n====================================================');
+  console.log('\\n====================================================');
   console.log('🎉 SUCCESS: Dynamic Swagger/OpenAPI updated!');
   console.log(`Path: ${openapiJsonPath}`);
   console.log(`Processed endpoints: ${updatedCount}`);
