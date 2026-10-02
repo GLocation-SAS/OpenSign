@@ -31,8 +31,17 @@ La creación y modificación de perfiles pasa por `beforeSave`: el navegador no 
 ## Despliegue y prueba
 
 1. Integrar el PR después de la revisión y construir imágenes de servidor y cliente desde el commit integrado. Registrar commit y etiquetas de imagen.
-2. Respaldar la configuración y base de datos del destino. Configurar las cinco variables anteriores y desplegar primero servidor, después cliente.
+2. Respaldar la configuración y base de datos del destino. Configurar las cinco variables anteriores y desplegar primero servidor, después cliente. Confirmar en los registros del servidor que la migración de `GoogleSubject` terminó y que existe el índice `unique_workspace_google_subject`.
 3. Probar con cuenta Workspace existente: conserva rol, tenant y documentos. Probar con un empleado nuevo: obtiene `contracts_User` en All Users. Probar una cuenta Google ajena al dominio: acceso rechazado. Probar cuenta deshabilitada: acceso rechazado.
 4. Confirmar correo/contraseña, firma externa, descarga, correo con PDF adjunto y cierre de sesión. Observar errores del servidor.
 
 Para ocultar inmediatamente el botón de Google, retirar `REACT_APP_GOOGLECLIENTID` del entorno del cliente y reiniciar ese contenedor. Para revertir código, usar las imágenes anteriores y restaurar datos solo si se demuestra que la nueva versión alteró datos; las cuentas creadas con Google se deben revisar antes de cualquier restauración.
+
+Las imágenes se construyen desde la raíz del repositorio con el contexto filtrado por `.dockerignore`:
+
+```bash
+docker build -f apps/OpenSignServer/Dockerhubfile -t opensign-server:<commit> .
+docker build -f apps/OpenSign/Dockerhubfile -t opensign-client:<commit> .
+```
+
+Usar el commit integrado como etiqueta concreta. El `docker-compose.yml` productivo contiene ajustes locales y no debe reemplazarse con el archivo del repositorio; cambiar únicamente las referencias de imagen después de guardar su copia actual y los respaldos.
