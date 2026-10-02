@@ -59,22 +59,33 @@ export default async function workspaceLogin(request) {
       await profile.save(null, { useMasterKey: true });
     }
   } else {
-    const existingUser = new Parse.Query(Parse.User);
-    existingUser.equalTo('username', email);
-    if (await existingUser.first({ useMasterKey: true })) {
+    const byUsername = new Parse.Query(Parse.User);
+    byUsername.equalTo('username', email);
+    const usernameUser = await byUsername.first({ useMasterKey: true });
+    const byUserEmail = new Parse.Query(Parse.User);
+    byUserEmail.equalTo('email', email);
+    const emailUser = await byUserEmail.first({ useMasterKey: true });
+    if (usernameUser && emailUser && usernameUser.id !== emailUser.id) {
       throw new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, 'Existing account requires administrator review.');
     }
-    const existingEmail = new Parse.Query(Parse.User);
-    existingEmail.equalTo('email', email);
-    if (await existingEmail.first({ useMasterKey: true })) {
-      throw new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, 'Existing account requires administrator review.');
+    let user = usernameUser || emailUser;
+    if (user) {
+      if (user.get('username')?.toLowerCase() !== email || user.get('email')?.toLowerCase() !== email) {
+        throw new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, 'Existing account requires administrator review.');
+      }
+      const byUser = new Parse.Query('contracts_Users');
+      byUser.equalTo('UserId', user);
+      if (await byUser.first({ useMasterKey: true })) {
+        throw new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, 'Existing account requires administrator review.');
+      }
+    } else {
+      user = new Parse.User();
+      user.set('username', email);
+      user.set('email', email);
+      user.set('name', claims.name || email.split('@')[0]);
+      user.set('password', crypto.randomBytes(48).toString('hex'));
+      await user.save(null, { useMasterKey: true });
     }
-    const user = new Parse.User();
-    user.set('username', email);
-    user.set('email', email);
-    user.set('name', claims.name || email.split('@')[0]);
-    user.set('password', crypto.randomBytes(48).toString('hex'));
-    await user.save(null, { useMasterKey: true });
 
     profile = new Parse.Object('contracts_Users');
     profile.set('UserId', user);
