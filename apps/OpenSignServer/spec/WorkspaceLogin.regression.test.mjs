@@ -14,8 +14,8 @@ class ParseError extends Error {
   constructor(code, message) { super(message); this.code = code; }
 }
 
-function fixture(claims, existing = []) {
-  const records = { _User: [], contracts_Users: [...existing] };
+function fixture(claims, existing = [], users = []) {
+  const records = { _User: [...users], contracts_Users: [...existing] };
   class Entity {
     constructor(className) { this.className = className; this.fields = {}; }
     get(key) { return this.fields[key]; }
@@ -30,7 +30,14 @@ function fixture(claims, existing = []) {
   class Query {
     constructor(className) { this.className = className === User ? '_User' : className; }
     equalTo(key, value) { this.key = key; this.value = value; return this; }
-    async first() { return records[this.className].find(item => item.get(this.key) === this.value); }
+    async first() {
+      return records[this.className].find(item => {
+        const value = item.get(this.key);
+        return this.key === 'UserId'
+          ? (value?.id || value?.objectId) === (this.value?.id || this.value?.objectId)
+          : value === this.value;
+      });
+    }
   }
   const verified = [];
   const google = { auth: { OAuth2: class {
@@ -99,4 +106,56 @@ test('rejects a Google subject that conflicts with an existing account link', as
   };
   const { login } = fixture(employee, [profile]);
   await assert.rejects(login({ params: { credential: 'x'.repeat(200) } }), { code: 119 });
+});
+
+test('reuses an existing internal user without a profile and preserves its password', async () => {
+  const user = {
+    id: 'user-1',
+    fields: { username: employee.email, email: employee.email, password: 'existing-password' },
+    get(key) { return this.fields[key]; },
+  };
+  const { login, records } = fixture(employee, [], [user]);
+  const result = await login({ params: { credential: 'x'.repeat(200) } });
+  assert.equal(result.sessionToken, 'session-1');
+  assert.equal(records._User.length, 1);
+  assert.equal(records.contracts_Users[0].get('UserId'), user);
+  assert.equal(records.contracts_Users[0].get('UserRole'), 'contracts_User');
+  assert.equal(user.get('password'), 'existing-password');
+});
+
+test('does not link an internal user whose stored email differs from Google', async () => {
+  const user = {
+    id: 'user-1',
+    get(key) { return { username: employee.email, email: 'other@glocation.com.co' }[key]; },
+  };
+  const { login, records } = fixture(employee, [], [user]);
+  await assert.rejects(login({ params: { credential: 'x'.repeat(200) } }), { code: 119 });
+  assert.equal(records.contracts_Users.length, 0);
+});
+
+test('does not link when username and email belong to different internal users', async () => {
+  const usernameUser = {
+    id: 'user-1',
+    get(key) { return { username: employee.email, email: 'other@glocation.com.co' }[key]; },
+  };
+  const emailUser = {
+    id: 'user-2',
+    get(key) { return { username: 'other@glocation.com.co', email: employee.email }[key]; },
+  };
+  const { login, records } = fixture(employee, [], [usernameUser, emailUser]);
+  await assert.rejects(login({ params: { credential: 'x'.repeat(200) } }), { code: 119 });
+  assert.equal(records.contracts_Users.length, 0);
+});
+
+test('does not create a second profile for an internal user already linked elsewhere', async () => {
+  const user = {
+    id: 'user-1',
+    get(key) { return { username: employee.email, email: employee.email }[key]; },
+  };
+  const profile = {
+    get(key) { return { Email: 'old@glocation.com.co', UserId: { objectId: user.id } }[key]; },
+  };
+  const { login, records } = fixture(employee, [profile], [user]);
+  await assert.rejects(login({ params: { credential: 'x'.repeat(200) } }), { code: 119 });
+  assert.equal(records.contracts_Users.length, 1);
 });
