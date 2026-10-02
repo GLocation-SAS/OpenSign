@@ -14,6 +14,8 @@ export default async function createGoogleSubjectIndex() {
         partialFilterExpression: { GoogleSubject: { $type: 'string' } },
       }
     );
+  } catch (error) {
+    console.error('Could not create Workspace identity index:', error.message);
   } finally {
     await client.close();
   }
