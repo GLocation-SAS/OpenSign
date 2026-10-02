@@ -97,7 +97,17 @@ async function saveUser(userDetails) {
   }
 }
 export default async function AddAdmin(request) {
-  const userDetails = request.params.userDetails;
+  const userDetails = request.params?.userDetails;
+  const email = userDetails?.email?.trim().toLowerCase();
+  if (!request.user || request.user.get('email')?.toLowerCase() !== email ||
+      userDetails?.role !== 'contracts_Admin') {
+    throw new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, 'Administrator setup is not allowed.');
+  }
+  const adminQuery = new Parse.Query('contracts_Users');
+  adminQuery.equalTo('UserRole', 'contracts_Admin');
+  if (await adminQuery.first({ useMasterKey: true })) {
+    throw new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, 'Administrator already exists.');
+  }
   const user = await saveUser(userDetails);
 
   try {
