@@ -35,7 +35,7 @@ export default async function forwardDoc(request) {
       try {
         let mailRes;
         for (let i = 0; i < recipients.length; i++) {
-          const publicUrl = req.headers.public_url || 'http://localhost:3000';
+          const publicUrl = process.env.PUBLIC_URL || 'http://localhost:3000';
           const logo = `<img src='${publicUrl}/logo.png' height='50' style='padding:20px'/>`;
 
 

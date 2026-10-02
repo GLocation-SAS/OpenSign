@@ -1,10 +1,36 @@
 import fs from 'node:fs';
-import https from 'https';
 import formData from 'form-data';
 import Mailgun from 'mailgun.js';
+import jwt from 'jsonwebtoken';
 import { appName, smtpenable, smtpsecure, updateMailCount } from '../../Utils.js';
 import { createTransport } from 'nodemailer';
 import axios from 'axios';
+
+export async function loadPdfAttachment(fileUrl) {
+  const source = new URL(fileUrl);
+  let downloadUrl = fileUrl;
+  const isLocalFile = source.pathname.startsWith('/api/app/files/');
+
+  if (isLocalFile) {
+    const serverUrl = new URL(process.env.SERVER_URL);
+    if (source.hostname !== 'localhost' && source.origin !== serverUrl.origin) {
+      throw new Error('Unexpected file URL origin.');
+    }
+    const publicFileUrl = `${serverUrl.origin}${source.pathname}`;
+    const token = jwt.sign(
+      { fileUrl: publicFileUrl, exp: Math.floor(Date.now() / 1000) + 200 },
+      process.env.MASTER_KEY
+    );
+    downloadUrl = `http://localhost:8080${source.pathname.slice(4)}?token=${token}`;
+  }
+
+  const response = await axios.get(downloadUrl, { responseType: 'arraybuffer', timeout: 30000 });
+  const pdf = Buffer.from(response.data);
+  if (response.status !== 200 || pdf.subarray(0, 5).toString() !== '%PDF-') {
+    throw new Error('Document download did not return a valid PDF.');
+  }
+  return pdf;
+}
 
 function safeUnlink(filePath, label = 'file') {
   if (fs.existsSync(filePath)) {
@@ -51,135 +77,81 @@ async function sendMailProvider(params) {
       }
     }
     if (params.url) {
-      const randomNumber = Math.floor(Math.random() * 5000);
-      const testPdf = `test_${randomNumber}.pdf`;
       try {
-        let Pdf = fs.createWriteStream(testPdf);
-        const writeToLocalDisk = () => {
-          return new Promise((resolve, reject) => {
-            const isSecure =
-              new URL(params.url)?.protocol === 'https:' &&
-              new URL(params.url)?.hostname !== 'localhost';
-            if (isSecure) {
-              https
-                .get(params.url, async function (response) {
-                  response.pipe(Pdf);
-                  response.on('end', () => resolve('success'));
-                })
-                .on('error', e => {
-                  console.error(`error: ${e.message}`);
-                  resolve('error');
-                });
-            } else {
-              const httpsAgent = new https.Agent({ rejectUnauthorized: false }); // Disable SSL validation
-              const localUrl = params.url;
-              const newlocalUrl = localUrl.replace(
-                'https://localhost:3001/api',
-                'http://localhost:8080'
-              );
-              axios
-                .get(newlocalUrl, { responseType: 'stream', httpsAgent: httpsAgent })
-                .then(response => {
-                  response.data.pipe(Pdf);
-                  Pdf.on('finish', () => resolve('success'));
-                  Pdf.on('error', () => resolve('error'));
-                })
-                .catch(e => {
-                  console.log('error in localurl', e.message);
-                  resolve('error');
-                });
-            }
-          });
+        const PdfBuffer = await loadPdfAttachment(params.url);
+        const pdfName = params.pdfName && `${params.pdfName}.pdf`;
+        const filename = params.filename;
+        const file = {
+          filename: filename || pdfName || 'exported.pdf',
+          content: smtpenable ? PdfBuffer : undefined,
+          data: smtpenable ? undefined : PdfBuffer,
         };
-        // `writeToLocalDisk` is used to create pdf file from doc url
-        const ress = await writeToLocalDisk();
-        if (ress) {
-          function readTolocal() {
-            return new Promise((resolve, reject) => {
-              setTimeout(() => {
-                let PdfBuffer = fs.readFileSync(Pdf.path);
-                resolve(PdfBuffer);
-              }, 100);
-            });
-          }
-          //  `PdfBuffer` used to create buffer from pdf file
-          let PdfBuffer = await readTolocal();
-          const pdfName = params.pdfName && `${params.pdfName}.pdf`;
-          const filename = params.filename;
-          const file = {
-            filename: filename || pdfName || 'exported.pdf',
-            content: smtpenable ? PdfBuffer : undefined,
-            data: smtpenable ? undefined : PdfBuffer,
-          };
 
-          let attachment;
-          const certificatePath = params.certificatePath || `./exports/certificate.pdf`;
-          if (fs.existsSync(certificatePath)) {
-            try {
-              //  `certificateBuffer` used to create buffer from pdf file
-              const certificateBuffer = fs.readFileSync(certificatePath);
-              const certificate = {
-                filename: 'certificate.pdf',
-                content: smtpenable ? certificateBuffer : undefined, //fs.readFileSync('./exports/exported_file_1223.pdf'),
-                data: smtpenable ? undefined : certificateBuffer,
-              };
-              attachment = [file, certificate];
-            } catch (err) {
-              attachment = [file];
-              console.log('sendMailWithAttachment read certificate error', err);
-            }
-          } else {
+        let attachment;
+        const certificatePath = params.certificatePath || `./exports/certificate.pdf`;
+        if (fs.existsSync(certificatePath)) {
+          try {
+            //  `certificateBuffer` used to create buffer from pdf file
+            const certificateBuffer = fs.readFileSync(certificatePath);
+            const certificate = {
+              filename: 'certificate.pdf',
+              content: smtpenable ? certificateBuffer : undefined, //fs.readFileSync('./exports/exported_file_1223.pdf'),
+              data: smtpenable ? undefined : certificateBuffer,
+            };
+            attachment = [file, certificate];
+          } catch (err) {
             attachment = [file];
+            console.log('sendMailWithAttachment read certificate error', err);
           }
-          const from = params.from || '';
-          const mailsender = smtpenable ? process.env.SMTP_USER_EMAIL : process.env.MAILGUN_SENDER;
-          const replyto = params?.replyto || '';
-          const messageParams = {
-            from: from + ' <' + mailsender + '>',
-            to: params.recipient,
-            subject: params.subject,
-            text: params.text || 'mail',
-            html: params?.html ? params.html + reportMsg : '',
-            attachments: smtpenable ? attachment : undefined,
-            attachment: smtpenable ? undefined : attachment,
-            bcc: params.bcc ? params.bcc : undefined,
-            replyTo: replyto ? replyto : undefined,
-          };
-          const cleanupPaths = [
-            { path: certificatePath, label: 'certificate' },
-            { path: testPdf, label: 'pdf' },
-          ];
-          if (transporterSMTP) {
-            const res = await transporterSMTP.sendMail(messageParams);
-            console.log('smtp transporter res: ', res?.response);
-            if (!res.err) {
+        } else {
+          attachment = [file];
+        }
+        const from = params.from || '';
+        const mailsender = smtpenable ? process.env.SMTP_USER_EMAIL : process.env.MAILGUN_SENDER;
+        const replyto = params?.replyto || '';
+        const messageParams = {
+          from: from + ' <' + mailsender + '>',
+          to: params.recipient,
+          subject: params.subject,
+          text: params.text || 'mail',
+          html: params?.html ? params.html + reportMsg : '',
+          attachments: smtpenable ? attachment : undefined,
+          attachment: smtpenable ? undefined : attachment,
+          bcc: params.bcc ? params.bcc : undefined,
+          replyTo: replyto ? replyto : undefined,
+        };
+        const cleanupPaths = [
+          { path: certificatePath, label: 'certificate' },
+        ];
+        if (transporterSMTP) {
+          const res = await transporterSMTP.sendMail(messageParams);
+          console.log('smtp transporter res: ', res?.response);
+          if (!res.err) {
+            if (extUserId) {
+              await updateMailCount(extUserId);
+            }
+
+            cleanupPaths.forEach(file => safeUnlink(file.path, file.label));
+            return { status: 'success' };
+          }
+        } else {
+          if (mailgunApiKey) {
+            const res = await mailgunClient.messages.create(mailgunDomain, messageParams);
+            console.log('mailgun res: ', res?.status);
+            if (res.status === 200) {
               if (extUserId) {
                 await updateMailCount(extUserId);
               }
-
               cleanupPaths.forEach(file => safeUnlink(file.path, file.label));
               return { status: 'success' };
             }
           } else {
-            if (mailgunApiKey) {
-              const res = await mailgunClient.messages.create(mailgunDomain, messageParams);
-              console.log('mailgun res: ', res?.status);
-              if (res.status === 200) {
-                if (extUserId) {
-                  await updateMailCount(extUserId);
-                }
-                cleanupPaths.forEach(file => safeUnlink(file.path, file.label));
-                return { status: 'success' };
-              }
-            } else {
-              cleanupPaths.forEach(file => safeUnlink(file.path, file.label));
-              return { status: 'error' };
-            }
+            cleanupPaths.forEach(file => safeUnlink(file.path, file.label));
+            return { status: 'error' };
           }
         }
       } catch (err) {
         console.log(`sendMailWithAttachment error: ${err}`);
-        safeUnlink(testPdf, 'testPdf');
         if (err) return { status: 'error' };
       }
     } else {
