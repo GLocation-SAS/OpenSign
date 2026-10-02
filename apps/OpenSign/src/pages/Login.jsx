@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Parse from "parse";
 import { useDispatch } from "react-redux";
 import axios from "axios";
@@ -46,9 +46,60 @@ function Login() {
   const [isModal, setIsModal] = useState(false);
   const [image, setImage] = useState();
   const [errMsg, setErrMsg] = useState();
+  const googleButton = useRef(null);
   useEffect(() => {
     handleUserExist();
     // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (!appInfo.googleClientId) return;
+    let active = true;
+    const renderGoogleButton = () => {
+      if (!active || !googleButton.current || !window.google?.accounts?.id) return;
+      window.google.accounts.id.initialize({
+        client_id: appInfo.googleClientId,
+        auto_select: false,
+        callback: async ({ credential }) => {
+          try {
+            setState((current) => ({ ...current, loading: true }));
+            const result = await Parse.Cloud.run("workspacelogin", { credential });
+            const user = await Parse.User.become(result.sessionToken);
+            setLocalVar(user.toJSON());
+            await continueLoginFlow();
+          } catch (error) {
+            console.error("Workspace login failed", error);
+            setState((current) => ({
+              ...current,
+              loading: false,
+              alertType: "danger",
+              alertMsg: error?.code === 119
+                ? "No se pudo ingresar con esta cuenta de Google. Verifica el dominio o consulta al administrador."
+                : t("something-went-wrong-mssg")
+            }));
+          }
+        }
+      });
+      window.google.accounts.id.renderButton(googleButton.current, {
+        theme: "outline",
+        size: "large",
+        width: 260,
+        text: "signin_with"
+      });
+    };
+    if (window.google?.accounts?.id) {
+      renderGoogleButton();
+    } else {
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.defer = true;
+      script.onload = renderGoogleButton;
+      document.head.appendChild(script);
+    }
+    return () => { active = false; };
+    // Google Identity is initialized once for this login screen.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleUserExist = async () => {
@@ -518,6 +569,12 @@ function Login() {
                       </button>
                     </div>
                   </form>
+                  {appInfo.googleClientId && (
+                    <div className="mt-4 flex flex-col items-center gap-2">
+                      <span className="text-xs text-base-content/70">Empleados de Glocation</span>
+                      <div ref={googleButton} aria-label="Iniciar sesión con Google" />
+                    </div>
+                  )}
                 </div>
                 {width >= 768 && (
                   <div className="place-self-center">

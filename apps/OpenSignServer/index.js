@@ -158,7 +158,7 @@ export const config = {
     }
     : {}),
   filesAdapter: fsAdapter,
-  auth: { google: { clientId: process.env.GOOGLE_CLIENT_ID }, sso: SSOAuth },
+  auth: { sso: SSOAuth },
   // for fix Adapter prototype don't match expected prototype
   push: { queueOptions: { disablePushWorker: true } },
 };

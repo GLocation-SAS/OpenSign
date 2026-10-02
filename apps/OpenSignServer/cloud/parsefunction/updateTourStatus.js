@@ -4,10 +4,14 @@ export default async function updateTourStatus(request) {
 
   if (request.user) {
     try {
-      const updateUser = new Parse.Object('contracts_Users');
-      updateUser.id = extUserId;
+      const query = new Parse.Query('contracts_Users');
+      const updateUser = await query.get(extUserId, { useMasterKey: true });
+      const owner = updateUser.get('UserId');
+      if ((owner?.id || owner?.objectId) !== request.user.id) {
+        throw new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, 'Not allowed to update this profile.');
+      }
       updateUser.set('TourStatus', tourstatus);
-      const res = await updateUser.save();
+      const res = await updateUser.save(null, { useMasterKey: true });
       return res;
     } catch (err) {
       console.log('Err ', err);

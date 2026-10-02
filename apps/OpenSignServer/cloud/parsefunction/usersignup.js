@@ -42,7 +42,13 @@ async function saveUser(userDetails) {
   }
 }
 export default async function usersignup(request) {
-  const userDetails = request.params.userDetails;
+  const userDetails = request.params?.userDetails;
+
+  if (!request.user || !userDetails?.email ||
+      request.user.get('email')?.toLowerCase() !== userDetails.email.trim().toLowerCase() ||
+      userDetails.role !== 'contracts_User') {
+    throw new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, 'Sign up is not allowed for this account.');
+  }
 
   try {
     const user = await saveUser(userDetails);
