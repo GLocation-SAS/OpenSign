@@ -48,7 +48,7 @@
     "p-limit": "^7.3.0",
     "parse": "^8.1.0",
     "parse-dbtool": "^1.2.0",
-    "parse-server": "^8.6.40",
+    "parse-server": "8.6.67",
     "parse-server-api-mail-adapter": "^5.0.5",
     "pdf-lib": "^1.17.1",
     "posthog-node": "^5.21.2",
