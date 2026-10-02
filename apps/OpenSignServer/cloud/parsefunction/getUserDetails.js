@@ -1,10 +1,18 @@
 async function getUserDetails(request) {
   const reqEmail = request.params.email;
-  if (reqEmail || request.user) {
+  if (request.user) {
     try {
       const userId = request.params.userId;
       const userQuery = new Parse.Query('contracts_Users');
       if (reqEmail) {
+        const actorQuery = new Parse.Query('contracts_Users');
+        actorQuery.equalTo('UserId', request.user);
+        const actor = await actorQuery.first({ useMasterKey: true });
+        if (!actor || actor.get('IsDisabled') === true ||
+            !['contracts_Admin', 'contracts_OrgAdmin'].includes(actor.get('UserRole'))) {
+          throw new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, 'Not allowed to search users.');
+        }
+        userQuery.equalTo('OrganizationId', actor.get('OrganizationId'));
         userQuery.equalTo('Email', reqEmail);
       } else {
         const email = request.user.get('email');
@@ -16,6 +24,7 @@ async function getUserDetails(request) {
       userQuery.exclude('CreatedBy.authData');
       userQuery.exclude('TenantId.FileAdapters');
       userQuery.exclude('google_refresh_token');
+      userQuery.exclude('GoogleSubject');
       userQuery.exclude('TenantId.PfxFile');
       if (userId) {
         userQuery.equalTo('CreatedBy', { __type: 'Pointer', className: '_User', objectId: userId });

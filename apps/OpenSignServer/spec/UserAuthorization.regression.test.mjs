@@ -7,6 +7,7 @@ const beforeSaveSource = readFileSync(new URL('../cloud/parsefunction/UsersBefor
 const addUserSource = readFileSync(new URL('../cloud/parsefunction/addUser.js', import.meta.url), 'utf8');
 const addAdminSource = readFileSync(new URL('../cloud/parsefunction/AddAdmin.js', import.meta.url), 'utf8');
 const signUpSource = readFileSync(new URL('../cloud/parsefunction/usersignup.js', import.meta.url), 'utf8');
+const listUsersSource = readFileSync(new URL('../cloud/parsefunction/getUserListByOrg.js', import.meta.url), 'utf8');
 
 class ParseError extends Error {
   static INVALID_SESSION_TOKEN = 209;
@@ -132,5 +133,20 @@ test('public signup cannot request an administrator role', async () => {
   await assert.rejects(signUp({
     user: { get: () => 'employee@glocation.com.co' },
     params: { userDetails: { email: 'employee@glocation.com.co', role: 'contracts_Admin' } },
+  }), { code: 119 });
+});
+
+test('a signed-in user cannot list profiles from another organization', async () => {
+  const listUsers = vm.runInNewContext(listUsersSource.replace('export default ', '') + '\ngetUserListByOrg', {
+    Parse: { Error: ParseError, Query: class {
+      equalTo() { return this; }
+      async first() {
+        return parseObject({ UserRole: 'contracts_Admin', OrganizationId: { id: 'org-1' } });
+      }
+    } },
+    console: { log() {} },
+  });
+  await assert.rejects(listUsers({
+    user: { id: 'admin-1' }, params: { organizationId: 'org-2' },
   }), { code: 119 });
 });
